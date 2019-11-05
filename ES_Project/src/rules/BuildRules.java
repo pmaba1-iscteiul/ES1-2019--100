@@ -8,7 +8,7 @@ import java.util.Iterator;
  *
  *Classe criada para então implementar a questão de ser true ou false
  *em funcionamento dos limites de cada linha do excel e das regras criadas
- *pelo utilizador
+ *pelo utilizador.
  */
 
 public class BuildRules {

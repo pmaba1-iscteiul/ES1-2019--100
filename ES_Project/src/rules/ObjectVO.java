@@ -7,7 +7,7 @@ import java.io.Serializable;
  * 
  * Esta classe tem como objetivo construir um objeto para que 
  * possa ser mais fácil perceber qual a feature e o limite que 
- * o utilizador colocou.
+ * o utilizador colocou .
  *
  */
 public class ObjectVO implements Serializable{
