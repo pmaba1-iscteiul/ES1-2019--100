@@ -21,6 +21,38 @@ public class ToolsQuality{
 		this.compare();
 	}
 
+	public int getPMD_DCI() {
+		return PMD_DCI;
+	}
+
+	public int getPMD_DII() {
+		return PMD_DII;
+	}
+
+	public int getPMD_ADCI() {
+		return PMD_ADCI;
+	}
+
+	public int getPMD_ADII() {
+		return PMD_ADII;
+	}
+
+	public int getiPlasma_DCI() {
+		return iPlasma_DCI;
+	}
+
+	public int getiPlasma_DII() {
+		return iPlasma_DII;
+	}
+
+	public int getiPlasma_ADCI() {
+		return iPlasma_ADCI;
+	}
+
+	public int getiPlasma_ADII() {
+		return iPlasma_ADII;
+	}
+
 	private void compare(){
 		for(Method m : rows) {
 			if(m.is_Long_Method == true) {
@@ -47,7 +79,5 @@ public class ToolsQuality{
 				}	
 			}
 		}
-	}
-	
-	
+	}	
 }
