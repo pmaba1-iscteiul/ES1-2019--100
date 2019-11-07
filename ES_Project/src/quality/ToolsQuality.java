@@ -16,8 +16,8 @@ public class ToolsQuality{
 	private int iPlasma_ADII = 0;
 	private final ArrayList<Method> rows;
 
-	public ToolsQuality() { //objeto
-		this.rows = ; //as rows do excel 
+	public ToolsQuality(/* objeto */) {
+		this.rows = /* as linhas do excel */;  
 		this.compare();
 	}
 
@@ -56,7 +56,7 @@ public class ToolsQuality{
 	private void compare(){
 		for(Method m : rows) {
 			if(m.is_Long_Method == true) {
-				if(m.PMD.equal(true)) {
+				if(m.PMD.equal == true) {
 					PMD_DCI ++;
 				} else {
 					PMD_ADII ++;
