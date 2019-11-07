@@ -1,19 +1,53 @@
 package comparison;
 
-public class Comparison{	
-	
-/*	- DCI, Defeitos Corretamente Identificados, quando o valor da coluna correspondente 
- 	à ferramenta (PMI ou iPlasma) é TRUE e a coluna	is_long_method também é TRUE;
-	- DII, Defeitos Incorretamente Identificados, quando o valor da coluna correspondente 
-	à ferramenta (PMI ou iPlasma) é TRUE e a coluna is_long_method é FALSE;
-	- ADCI, Ausências de Defeitos Corretamente Identificadas, quando o valor da coluna correspondente 
-	à ferramenta (PMI ou iPlasma) é FALSE e a coluna	is_long_method também é FALSE;
-	- ADII, Ausências de Defeitos Incorretamente Identificadas, quando o valor da coluna correspondente 
-	à ferramenta (PMI ou iPlasma) é FALSE e a colunais_long_method é TRUE.
-*/	
+import java.util.ArrayList;
+import excelReader.ExcelReader;
+import excelReader.Method;
 
-	int dfv;
-	
+public class Comparison{	
+
+	private int PMD_DCI = 0;
+	private int PMD_DII = 0;
+	private int PMD_ADCI = 0;
+	private int PMD_ADII = 0;
+	private int iPlasma_DCI = 0;
+	private int iPlasma_DII = 0;
+	private int iPlasma_ADCI = 0;
+	private int iPlasma_ADII = 0;
+	private final ArrayList<Method> rows;
+
+	public Comparison() { //objeto
+		this.rows = ; //as rows do excel 
+		this.compare();
+	}
+
+	private void compare(){
+		for(Method m : rows) {
+			if(m.is_Long_Method == true) {
+				if(m.PMD.equal(true)) {
+					PMD_DCI ++;
+				} else {
+					PMD_ADII ++;
+				}
+				if(m.iPlasma == true) {
+					iPlasma_DCI ++;
+				} else {
+					iPlasma_ADII ++;
+				}	
+			} else {
+				if(m.PMD == false) {
+					PMD_ADCI ++;
+				} else {
+					PMD_DII ++;
+				}
+				if(m.iPlasma == false) {
+					iPlasma_ADCI ++;
+				} else {
+					iPlasma_DII ++;
+				}	
+			}
+		}
+	}
 	
 	
 }
