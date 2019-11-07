@@ -1,10 +1,10 @@
-package comparison;
+package quality;
 
 import java.util.ArrayList;
 import excelReader.ExcelReader;
 import excelReader.Method;
 
-public class Comparison{	
+public class ToolsQuality{	
 
 	private int PMD_DCI = 0;
 	private int PMD_DII = 0;
@@ -16,7 +16,7 @@ public class Comparison{
 	private int iPlasma_ADII = 0;
 	private final ArrayList<Method> rows;
 
-	public Comparison() { //objeto
+	public ToolsQuality() { //objeto
 		this.rows = ; //as rows do excel 
 		this.compare();
 	}
