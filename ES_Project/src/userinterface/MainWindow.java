@@ -12,22 +12,21 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 public class MainWindow {
-	
-	private static int columns = 2;
-	private static int rows = 1;
-	
+		
 	private JFrame frame;
 	private JPanel main_panel;
 	private JPanel visualization_panel;
-	private JPanel table_panel;
+	private JPanel rules_alteration_panel;
 
 	public MainWindow() {
 		super();
-		this.frame = new JFrame("Sfotware Engineering App");
+		this.frame = new JFrame("Software Engineering App");
 		this.main_panel = new JPanel();
 		this.visualization_panel = new JPanel();
+		this.rules_alteration_panel = new JPanel();
 		this.addContentMain();
 		this.addContentVisualization();
+		this.addContentRulesAlteration();
 		this.frame.add(main_panel);
 		this.open();
 	}
@@ -53,11 +52,22 @@ public class MainWindow {
 	 * Creates main windown
 	 */
 	private void addContentMain() {
-		main_panel = new JPanel(new GridLayout(rows, columns));
+		main_panel = new JPanel(new GridLayout(2, 2));
 		JButton rules_button = new JButton("Add/Change Rules");
 		JButton visualization_button = new JButton("Vizualise Data");
+		JButton tools_quality_button = new JButton("Tools Quality");
 		main_panel.add(rules_button);
 		main_panel.add(visualization_button);
+		main_panel.add(tools_quality_button);
+		
+		rules_button.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				buildScreen(main_panel, rules_alteration_panel);
+			}
+		});
 		
 		visualization_button.addActionListener(new ActionListener() {
 			
@@ -65,6 +75,15 @@ public class MainWindow {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				buildScreen(main_panel, visualization_panel);
+			}
+		});
+		
+		tools_quality_button.addActionListener(new  ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println("Tools quality");
 			}
 		});
 		
@@ -96,7 +115,7 @@ public class MainWindow {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				System.out.println("Graohics Button");
+				System.out.println("Graphics Button");
 			}
 		});
 		
@@ -133,6 +152,42 @@ public class MainWindow {
 		
 	}
 
+	private void addContentRulesAlteration() {
+		rules_alteration_panel.setLayout(new GridLayout(2,2));
+		JButton add_rules_button = new JButton("Add Rules");
+		JButton change_rulles_button = new JButton("Change Rules");
+		JButton back_button = new JButton("Back");
+		rules_alteration_panel.add(add_rules_button);
+		rules_alteration_panel.add(change_rulles_button);
+		rules_alteration_panel.add(back_button);
+		
+		add_rules_button.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println("Add Rules");
+			}
+		});
+		
+		change_rulles_button.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println("Change Rules");
+			}
+		});
+		
+		back_button.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				buildScreen(rules_alteration_panel, main_panel);
+			}
+		});
+	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		new MainWindow();
