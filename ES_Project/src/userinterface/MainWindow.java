@@ -5,7 +5,10 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
+import java.util.Stack;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -15,8 +18,11 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
+import org.apache.poi.hssf.record.BottomMarginRecord;
 
 public class MainWindow {
 		
@@ -25,6 +31,11 @@ public class MainWindow {
 	private JPanel visualization_panel;
 	private JPanel rules_alteration_panel;
 	private JPanel rule_creation_defect_panel;
+	private List<String> condition = new ArrayList<>();
+	private Stack<JPanel> metrics = new Stack<>();
+	// create condition panel
+	String condition_comparator = "";
+	int condition_limit = 0;
 
 	public MainWindow() {
 		super();
@@ -215,7 +226,7 @@ public class MainWindow {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				rule_creation(Defects.is_long);
+				createRule(Defects.is_long);
 			}
 		});
 		
@@ -224,7 +235,7 @@ public class MainWindow {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				rule_creation(Defects.is_feature_envy);
+				createRule(Defects.is_feature_envy);
 			}
 		});
 		
@@ -247,7 +258,7 @@ public class MainWindow {
 		
 	}
 
-	private void rule_creation(Defects defect) {
+	private void createRule(Defects defect) {
 		JPanel metrics_panel = new JPanel(new BorderLayout());
 		JPanel left_panel = new JPanel(new BorderLayout());
 		JPanel right_panel = new JPanel(new BorderLayout());
@@ -257,7 +268,11 @@ public class MainWindow {
 		JScrollPane scroll_list = new JScrollPane(metric_list);
 		left_panel.add(scroll_list, BorderLayout.NORTH);
 		
-		List<String> selected_metrics = new ArrayList<String>();
+		JLabel metrics_title_label = new JLabel("Metrics alredy choosen:");
+		right_panel.add(metrics_title_label, BorderLayout.NORTH);
+		
+		JLabel metrics_choosen_label = new JLabel();
+		right_panel.add(metrics_choosen_label, BorderLayout.CENTER);
 		
 		metric_list.addListSelectionListener(new ListSelectionListener() {
 			
@@ -265,15 +280,13 @@ public class MainWindow {
 			public void valueChanged(ListSelectionEvent e) {
 				if(!e.getValueIsAdjusting())
 					if(metric_list.getSelectedValue() != null) {
-						selected_metrics.add(metric_list.getSelectedValue().toString());
+						metrics.add(createConditionPanel(metric_list.getSelectedValue().toString()));
+						metrics_choosen_label.setText(metrics_choosen_label.getText() + metric_list.getSelectedValue().toString() + "\n");
 						list.removeElement(metric_list.getSelectedValue());
-						
+						frame.pack();
 					}
 			}
 		});
-		
-		JLabel metrics_choosen_label = new JLabel("Metrics alredy choosen:\n");
-		right_panel.add(metrics_choosen_label, BorderLayout.NORTH);
 		
 		JButton next_button = new JButton("Next");
 		JButton back_button = new JButton("Back");
@@ -283,7 +296,7 @@ public class MainWindow {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				
+				buildScreen(metrics_panel, metrics.peek());
 			}
 		});
 		
@@ -313,6 +326,160 @@ public class MainWindow {
 		
 		buildScreen(rule_creation_defect_panel, metrics_panel);
 		
+	}
+
+	private JPanel createConditionPanel(String metric_name) {
+		JPanel panel = new JPanel(new BorderLayout());
+		
+		JPanel top = new JPanel(new BorderLayout());
+		top.add(new JLabel("Limit: "), BorderLayout.WEST);
+		JTextField limit_text = new JTextField();
+		top.add(limit_text, BorderLayout.EAST);
+		
+		JPanel center = new JPanel(new GridLayout(1,4));
+		JButton grater_button = new JButton(">");
+		JButton grater_equals_button = new JButton(">=");
+		JButton lesser_button = new JButton("<");
+		JButton lesser_equals_button = new JButton("<=");
+		
+		center.add(grater_equals_button);
+		center.add(grater_button);
+		center.add(lesser_button);
+		center.add(lesser_equals_button);
+		
+		grater_button.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				condition_comparator = ">";
+			}
+		});
+		
+		grater_equals_button.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				condition_comparator = ">=";
+			}
+		});
+		
+		lesser_button.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				condition_comparator = "<";
+			}
+		});
+		
+		lesser_equals_button.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				condition_comparator = "<=";
+			}
+		});
+		
+		JPanel bottom = new JPanel(new BorderLayout());
+		JButton back_button = new JButton("Back");
+		JButton next_Button = new JButton("Next");
+		bottom.add(back_button, BorderLayout.WEST);
+		bottom.add(next_Button, BorderLayout.EAST);
+		
+		back_button.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				condition = new ArrayList<>();
+				buildScreen(panel, main_panel);
+			}
+		});
+		
+		next_Button.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				if (metrics.size() == 1)
+					buildScreen(metrics.pop(), joinCondition());
+				else
+					buildScreen(metrics.pop(), metrics.peek());
+				
+				condition.add("O Objeto Com a condição");
+			}
+		});
+		
+		panel.add(top, BorderLayout.NORTH);
+		panel.add(center, BorderLayout.CENTER);
+		panel.add(bottom, BorderLayout.SOUTH);
+		
+		return panel;
+	}
+	
+	private JPanel joinCondition() {
+		JPanel panel = new JPanel(new BorderLayout());
+		JPanel right = new JPanel(new GridLayout(2,1));
+		JPanel bottom = new JPanel();
+		
+		DefaultListModel<String> list = new DefaultListModel<String>();
+		JList metric_list = new JList(list);
+		JScrollPane scroll_list = new JScrollPane(metric_list);
+		
+		panel.add(scroll_list, BorderLayout.WEST);
+		
+		JButton and_button = new JButton("AND");
+		JButton or_button = new JButton("OR");
+		right.add(and_button);
+		right.add(or_button);
+		panel.add(right, BorderLayout.EAST);
+		
+		and_button.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		or_button.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		JButton cancel_button = new JButton("Cancel");
+		JButton nextButton = new JButton("Next");
+		bottom.add(cancel_button, BorderLayout.WEST);
+		bottom.add(nextButton, BorderLayout.EAST);
+		panel.add(bottom, BorderLayout.SOUTH);
+		
+		cancel_button.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				buildScreen(panel, main_panel);
+			}
+		});
+		
+		nextButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		return panel;
 	}
 	
 	public static void main(String[] args) {
