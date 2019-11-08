@@ -1,6 +1,6 @@
 package excelReader;
 
-public class Test {
+public class Experiment {
 
 	public static void main(String[] args) {
 		
