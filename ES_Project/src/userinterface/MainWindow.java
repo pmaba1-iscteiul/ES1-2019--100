@@ -4,12 +4,19 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public class MainWindow {
 		
@@ -17,6 +24,7 @@ public class MainWindow {
 	private JPanel main_panel;
 	private JPanel visualization_panel;
 	private JPanel rules_alteration_panel;
+	private JPanel rule_creation_defect_panel;
 
 	public MainWindow() {
 		super();
@@ -24,9 +32,11 @@ public class MainWindow {
 		this.main_panel = new JPanel();
 		this.visualization_panel = new JPanel();
 		this.rules_alteration_panel = new JPanel();
+		this.rule_creation_defect_panel = new JPanel(new BorderLayout());
 		this.addContentMain();
 		this.addContentVisualization();
 		this.addContentRulesAlteration();
+		this.addContentRuleDefect();
 		this.frame.add(main_panel);
 		this.open();
 	}
@@ -166,7 +176,7 @@ public class MainWindow {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				System.out.println("Add Rules");
+				buildScreen(rules_alteration_panel, rule_creation_defect_panel);
 			}
 		});
 		
@@ -188,6 +198,123 @@ public class MainWindow {
 			}
 		});
 	}
+	
+	private void addContentRuleDefect() {
+		JPanel defect_buttons_panel = new JPanel(new BorderLayout());
+		JButton is_long_button = new JButton("is Long");
+		JButton is_feature = new JButton("is feature envy");
+		
+		defect_buttons_panel.add(is_long_button, BorderLayout.WEST);
+		defect_buttons_panel.add(is_feature, BorderLayout.EAST);
+		
+		rule_creation_defect_panel.add(defect_buttons_panel, BorderLayout.CENTER);
+		rule_creation_defect_panel.add(new JLabel("The new rule describes what defect?"), BorderLayout.NORTH);
+		
+		is_long_button.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				rule_creation(Defects.is_long);
+			}
+		});
+		
+		is_feature.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				rule_creation(Defects.is_feature_envy);
+			}
+		});
+		
+		JPanel progress_buttons_panel = new JPanel(new BorderLayout());
+		JButton back_button = new JButton("Back");
+		
+		progress_buttons_panel.add(back_button, BorderLayout.WEST);
+		rule_creation_defect_panel.add(progress_buttons_panel, BorderLayout.SOUTH);
+		
+		back_button.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				buildScreen(rule_creation_defect_panel, main_panel);
+			}
+		});
+		
+		
+		
+	}
+
+	private void rule_creation(Defects defect) {
+		JPanel metrics_panel = new JPanel(new BorderLayout());
+		JPanel left_panel = new JPanel(new BorderLayout());
+		JPanel right_panel = new JPanel(new BorderLayout());
+		
+		DefaultListModel<String> list = new DefaultListModel<String>();
+		JList metric_list = new JList(list);
+		JScrollPane scroll_list = new JScrollPane(metric_list);
+		left_panel.add(scroll_list, BorderLayout.NORTH);
+		
+		List<String> selected_metrics = new ArrayList<String>();
+		
+		metric_list.addListSelectionListener(new ListSelectionListener() {
+			
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				if(!e.getValueIsAdjusting())
+					if(metric_list.getSelectedValue() != null) {
+						selected_metrics.add(metric_list.getSelectedValue().toString());
+						list.removeElement(metric_list.getSelectedValue());
+						
+					}
+			}
+		});
+		
+		JLabel metrics_choosen_label = new JLabel("Metrics alredy choosen:\n");
+		right_panel.add(metrics_choosen_label, BorderLayout.NORTH);
+		
+		JButton next_button = new JButton("Next");
+		JButton back_button = new JButton("Back");
+		
+		next_button.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		back_button.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				buildScreen(metrics_panel, main_panel);
+			}
+		});
+		
+		left_panel.add(back_button, BorderLayout.SOUTH);
+		right_panel.add(next_button,BorderLayout.SOUTH);
+		
+		metrics_panel.add(left_panel,BorderLayout.WEST);
+		metrics_panel.add(right_panel, BorderLayout.EAST);
+		
+		/*
+		 * test begin
+		 */
+			list.addElement("metrica 1");
+			list.addElement("Metrica 2");
+		/*
+		 * test end
+		 */
+		
+		buildScreen(rule_creation_defect_panel, metrics_panel);
+		
+	}
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		new MainWindow();
