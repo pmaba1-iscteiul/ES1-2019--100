@@ -75,7 +75,7 @@ public class MainWindow {
 	private void addContentMain() {
 		main_panel = new JPanel(new GridLayout(2, 2));
 		JButton rules_button = new JButton("Add/Change Rules");
-		JButton visualization_button = new JButton("Vizualise Data");
+		JButton visualization_button = new JButton("Visualize Data");
 		JButton tools_quality_button = new JButton("Tools Quality");
 		main_panel.add(rules_button);
 		main_panel.add(visualization_button);
