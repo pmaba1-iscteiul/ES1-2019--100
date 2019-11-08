@@ -9,6 +9,7 @@ import java.util.Iterator;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -33,7 +34,7 @@ public class ExcelReader {
 
 			while (rowit.hasNext()) {
 				nextRow = rowit.next();
-				Iterator <Cell> cellit = nextRow.cellIterator();
+				Iterator<Cell> cellit = nextRow.cellIterator();
 				int MethodID  = 0;
 				String Package = "";
 				String ClassName = "";
@@ -48,7 +49,7 @@ public class ExcelReader {
 				boolean is_Feature_Envy = false;
 
 				while (cellit.hasNext()) {
-					Cell nextCell = cellit.next();
+					XSSFCell nextCell = (XSSFCell) cellit.next();
 					int index = nextCell.getColumnIndex();
 
 					switch (index) {
@@ -89,7 +90,6 @@ public class ExcelReader {
 						else{
 							LAA = (Double.parseDouble(nextCell.getStringCellValue()));
 						}
-						System.out.println(nextCell.getCellType());
 						break;
 
 					case 8:

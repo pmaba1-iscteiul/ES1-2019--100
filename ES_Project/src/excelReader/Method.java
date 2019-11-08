@@ -79,6 +79,11 @@ public class Method {
 	public boolean isIs_Feature_Envy() {
 		return is_Feature_Envy;
 	}
+	
+	public String getRow() {
+		String row = MethodID + ";" + Package + ";" + ClassName + ";" + Method + ";" + LOC + ";" + CYCLO + ";" + ATFD + ";" + LAA + ";" + is_Long_Method + ";" + PMD + ";" + iPlasma + ";" + is_Feature_Envy;  
+		return row;
+	}
 
 
 
