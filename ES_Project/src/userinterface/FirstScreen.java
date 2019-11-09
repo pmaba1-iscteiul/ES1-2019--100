@@ -74,9 +74,10 @@ public class FirstScreen {
 			file_path.setText(browser.getSelectedFile().getAbsolutePath());
 		}
 	}
-
-
-
+	
+	public String getFile_path() {
+		return file_path.getText();
+	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

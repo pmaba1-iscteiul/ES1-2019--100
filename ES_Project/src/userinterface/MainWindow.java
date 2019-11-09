@@ -24,6 +24,8 @@ import javax.swing.event.ListSelectionListener;
 
 import org.apache.poi.hssf.record.BottomMarginRecord;
 
+import utils.DataBase;
+
 public class MainWindow {
 		
 	private JFrame frame;
@@ -33,11 +35,12 @@ public class MainWindow {
 	private JPanel rule_creation_defect_panel;
 	private List<String> condition = new ArrayList<>();
 	private Stack<JPanel> metrics = new Stack<>();
+	private DataBase data;
 	// create condition panel
 	String condition_comparator = "";
 	int condition_limit = 0;
 
-	public MainWindow() {
+	public MainWindow(DataBase data) {
 		super();
 		this.frame = new JFrame("Software Engineering App");
 		this.main_panel = new JPanel();
@@ -50,6 +53,8 @@ public class MainWindow {
 		this.addContentRuleDefect();
 		this.frame.add(main_panel);
 		this.open();
+		
+		this.data = data;
 	}
 	/**
 	 * Changes between two JPanels
@@ -482,9 +487,9 @@ public class MainWindow {
 		return panel;
 	}
 	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		new MainWindow();
-	}
+//	public static void main(String[] args) {
+//		// TODO Auto-generated method stub
+//		new MainWindow();
+//	}
 
 }
