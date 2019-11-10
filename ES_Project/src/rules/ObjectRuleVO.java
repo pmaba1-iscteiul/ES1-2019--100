@@ -3,6 +3,9 @@ package rules;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import francisco.LogicOperator;
+import francisco.ObjectVO;
+
 /**
  * @author Francisco Raimundo
  *
@@ -16,9 +19,10 @@ public class ObjectRuleVO implements Serializable{
 
 	ArrayList<ObjectVO> listObjectsVO;
 	ArrayList<LogicOperator> listOperators;
+	String ruleName;
 	
 	/**
-	 * @return lista de ObjectVO
+	 * @return Lista de ObjectVO
 	 */
 	public ArrayList<ObjectVO> getListObjectsVO() {
 		return listObjectsVO;
@@ -29,17 +33,19 @@ public class ObjectRuleVO implements Serializable{
 	public void setListObjectsVO(ArrayList<ObjectVO> listObjectsVO) {
 		this.listObjectsVO = listObjectsVO;
 	}
-	/**
-	 * @return lista com os operadores lógicos
-	 */
+	public String getRuleName() {
+		return ruleName;
+	}
+	public void setRuleName(String ruleName) {
+		this.ruleName = ruleName;
+	}
 	public ArrayList<LogicOperator> getListLogicOperators() {
 		return listOperators;
 	}
-	/**
-	 * @param lista de operadores lógicos
-	 */
 	public void setListOperators(ArrayList<LogicOperator> listOperators) {
 		this.listOperators = listOperators;
-	}	
+	}
+	
+	
+	
 }
-
