@@ -3,6 +3,14 @@ package francisco;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import francisco.Column;
+import francisco.LineResult;
+import francisco.Linha;
+import francisco.LogicOperator;
+import francisco.Method;
+import francisco.ObjectRuleVO;
+import francisco.ObjectVO;
+
 /**
  * @author Francisco Raimundo
  *
@@ -64,10 +72,13 @@ public class BuildRules {
 
 	}
 
-	public void getAndSetBoolean(ObjectRuleVO objectRuleVO, ArrayList<Linha> linha) {
-		// for() {//percorre as linhas do array do batoca (excel)
+	public void getAndSetBoolean(ObjectRuleVO objectRuleVO, ArrayList<Method> linha) {
 
-		for(Linha l : linha) {
+		boolean boleano = false;
+		LineResult lineResult;
+		Column column;
+		
+		for(Method l : linha) {
 
 			arrayObjectsVO = objectRuleVO.getListObjectsVO();
 			arrayLogicOperators = objectRuleVO.getListLogicOperators();
@@ -75,12 +86,16 @@ public class BuildRules {
 			for (ObjectVO a : arrayObjectsVO) {
 				colocaNoArrayBooleans(l, a);
 			}
-			l.setDepoisDasRegras(contasComOperadoresLogicos(arrayLogicOperators));
-
-			arrayFinal.clear();
+			boleano = contasComOperadoresLogicos(arrayLogicOperators);
+			
+			lineResult.set(l.getMethodID(), boleano);
+			arrayLineResult.add(lineResult);
+			
 			arrayIntermedio.clear();
 		}
-
+		column.setArray(arrayLineResult);
+		column.setRuleName(objectRuleVO.getRuleName());
+		arrayLineResult.clear();
 	}
 
 	private boolean contasComOperadoresLogicos(ArrayList<LogicOperator> arrayLogicOperators) {
@@ -93,13 +108,13 @@ public class BuildRules {
 				auxBoolean=arrayIntermedio.get(a);
 			}
 			auxBooleanIntermedio=arrayIntermedio.get(a);
-			auxBoolean=CalculaBoolean(auxBooleanIntermedio, arrayIntermedio.get(a), arrayLogicOperators.get(a-1));
+			auxBoolean=calculaBoolean(auxBooleanIntermedio, arrayIntermedio.get(a), arrayLogicOperators.get(a-1));
 			auxBooleanIntermedio=auxBoolean;
 		}
 		return auxBoolean;
 	}
 
-	private boolean CalculaBoolean(Boolean boolean1, Boolean boolean2, LogicOperator logicOperator) {
+	private boolean calculaBoolean(Boolean boolean1, Boolean boolean2, LogicOperator logicOperator) {
 		boolean auxBoolean=false;
 		if(logicOperator.equals(LogicOperator.AND)) {
 			if(boolean1.equals(true) && boolean2.equals(true)) {
@@ -147,12 +162,16 @@ public class BuildRules {
 			switch(a.getFeature()) {
 			case"LOC":
 				auxDouble = l.getLOC();
+				break;
 			case"CYCLO":
 				auxDouble = l.getCYCLO();
+				break;
 			case"ATFD":
 				auxDouble = l.getATFD();
+				break;
 			case"LAA":
 				auxDouble = l.getLAA();
+				break;
 		}
 			
 		} catch (Exception e) {
