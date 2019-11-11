@@ -2,7 +2,8 @@ package quality;
 
 import java.util.ArrayList;
 import excelReader.ExcelReader;
-import excelReader.Method;
+import excelReader.FileRow;
+import utils.DataBase;
 
 /**
  * @author Alexandra Belo
@@ -19,15 +20,15 @@ public class RulesQuality {
 	private int DII = 0;	
 	private int ADCI = 0;
 	private int ADII = 0;
-	private ArrayList<java.lang.reflect.Method> rows;
+	private ArrayList<FileRow> rows;
 	
 	/**
 	 * RulesQuality constructor  
-	 * @param Object from somewhere else! /* objeto 
+	 * @param DataBase object 
 	 */
-	public RulesQuality (/* objeto */) {
-		this.rows = /* as linhas do excel */new ArrayList<Method>();
-		this.compare();
+	public RulesQuality (DataBase db/* objeto */) {
+		this.rows = db.getExcel_file();
+//		this.compare();
 	}
 
 	/**
@@ -68,10 +69,10 @@ public class RulesQuality {
 		
 // preciso de ver se é para comparar o resultado da regra com is_Long_Method ou com is_Feature_Envy
 //	private void compare(){
-//		for(Method m : rows) {
+//		for(FileRow method : rows) {
 //			
 //			
-//			if(m.is_Long_Method == true) {
+//			if(method.is_Long_Method == true) {
 //				}
 //			else {
 //				

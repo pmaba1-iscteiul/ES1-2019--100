@@ -2,7 +2,8 @@ package quality;
 
 import java.util.ArrayList;
 import excelReader.ExcelReader;
-import excelReader.Method;
+import excelReader.FileRow;
+import utils.DataBase;
 
 /**
  * @author Alexandra Belo
@@ -22,15 +23,15 @@ public class ToolsQuality{
 	private int iPlasma_DII = 0;
 	private int iPlasma_ADCI = 0;
 	private int iPlasma_ADII = 0;
-	private final ArrayList<Method> rows;
+	private final ArrayList<FileRow> rows;
 	
 	/**
 	 * RulesQuality constructor  
-	 * @param Object from somewhere else! /* objeto 
+	 * @param DataBase object 
 	 */
 	
-	public ToolsQuality(/* objeto */) {
-		this.rows = /* as linhas do excel */new ArrayList<Method>();  
+	public ToolsQuality(DataBase db) {
+		this.rows = db.getExcel_file();  
 		this.compare();
 	}
 
@@ -106,25 +107,25 @@ public class ToolsQuality{
 	}
 	
 	private void compare(){
-		for(Method m : rows) {
-			if(m.is_Long_Method == true) {
-				if(m.PMD.equal == true) {
+		for(FileRow method : rows) {
+			if(method.is_Long_Method == true) {
+				if(method.PMD.equal == true) {
 					PMD_DCI ++;
 				} else {
 					PMD_ADII ++;
 				}
-				if(m.iPlasma == true) {
+				if(method.iPlasma == true) {
 					iPlasma_DCI ++;
 				} else {
 					iPlasma_ADII ++;
 				}	
 			} else {
-				if(m.PMD == false) {
+				if(method.PMD == false) {
 					PMD_ADCI ++;
 				} else {
 					PMD_DII ++;
 				}
-				if(m.iPlasma == false) {
+				if(method.iPlasma == false) {
 					iPlasma_ADCI ++;
 				} else {
 					iPlasma_DII ++;
