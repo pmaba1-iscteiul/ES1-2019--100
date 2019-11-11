@@ -85,7 +85,6 @@ public class ExcelReader {
 						else{
 							LAA = (Double.parseDouble(nextCell.getStringCellValue()));
 						}
-						System.out.println(nextCell.getCellType());
 						break;
 
 					case 8:

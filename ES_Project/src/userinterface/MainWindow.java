@@ -5,9 +5,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 import java.util.Stack;
 
 import javax.swing.DefaultListModel;
@@ -22,10 +20,15 @@ import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import org.apache.poi.hssf.record.BottomMarginRecord;
-
 import utils.DataBase;
-
+/**
+ * Main visualization window, responsible for all the mechanics in the system and all user interface.
+ * 
+ * Not fully implemented yet. 
+ * 
+ * @author João André
+ *
+ */
 public class MainWindow {
 		
 	private JFrame frame;
@@ -39,7 +42,11 @@ public class MainWindow {
 	// create condition panel
 	String condition_comparator = "";
 	int condition_limit = 0;
-
+	
+	/**
+	 * Initializes all class atr
+	 * @param data
+	 */
 	public MainWindow(DataBase data) {
 		super();
 		this.frame = new JFrame("Software Engineering App");
@@ -75,7 +82,7 @@ public class MainWindow {
 		frame.pack();
 	}
 	/**
-	 * Creates main windown
+	 * Creates main windown. Responsible for the menu creation.
 	 */
 	private void addContentMain() {
 		main_panel = new JPanel(new GridLayout(2, 2));
@@ -154,7 +161,9 @@ public class MainWindow {
 			}
 		});	
 	}
-
+	/**
+	 * Creates the windows responsible by allowing the user visualize the excel file
+	 */
 	private void createTableView() {
 		JPanel table_panel = new JPanel();
 		table_panel.setLayout(new BorderLayout());
@@ -177,7 +186,11 @@ public class MainWindow {
 		buildScreen(visualization_panel, table_panel);
 		
 	}
-
+	/**
+	 * Creates the menu that allows the user to choose if he what's to add a new rule or change a existing one.
+	 * 
+	 * Still missing interface for changing rules
+	 */
 	private void addContentRulesAlteration() {
 		rules_alteration_panel.setLayout(new GridLayout(2,2));
 		JButton add_rules_button = new JButton("Add Rules");
@@ -215,6 +228,10 @@ public class MainWindow {
 		});
 	}
 	
+	/**
+	 * Panel that allows the user to choose the defect that's going to be represented.
+	 * 
+	 */
 	private void addContentRuleDefect() {
 		JPanel defect_buttons_panel = new JPanel(new BorderLayout());
 		JButton is_long_button = new JButton("is Long");
@@ -263,6 +280,10 @@ public class MainWindow {
 		
 	}
 
+	/**
+	 * Shows a list of metrics. The user can select these metrics to construct the rule
+	 * @param defect
+	 */
 	private void createRule(Defects defect) {
 		JPanel metrics_panel = new JPanel(new BorderLayout());
 		JPanel left_panel = new JPanel(new BorderLayout());
@@ -333,6 +354,12 @@ public class MainWindow {
 		
 	}
 
+	/**
+	 * Creates a new JPanel for the metrics selected by the user. The JPanel enables the user to say the limit and comparator
+	 * to use e the rules. In essense creates the condition.
+	 * @param metric_name
+	 * @return
+	 */
 	private JPanel createConditionPanel(String metric_name) {
 		JPanel panel = new JPanel(new BorderLayout());
 		
@@ -425,6 +452,10 @@ public class MainWindow {
 		return panel;
 	}
 	
+	/**
+	 * Enables the user to join several conditions previously created. Those are join with a logic operator.
+	 * @return
+	 */
 	private JPanel joinCondition() {
 		JPanel panel = new JPanel(new BorderLayout());
 		JPanel right = new JPanel(new GridLayout(2,1));
