@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
@@ -14,15 +15,10 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ExcelReader {
-
-	private ArrayList<Method> Rows = new ArrayList<>();	
-
-	public ExcelReader() {
-
-	}
-
-	public void ReadFile (String FilePath) {
-
+	
+	public static List<FileRow> ReadFile (String FilePath) {
+		List<FileRow> Rows = new ArrayList<>();
+		
 		try {
 
 			FileInputStream f = new FileInputStream (new File (FilePath));
@@ -109,7 +105,7 @@ public class ExcelReader {
 						break;
 					}
 				}
-				Method m = new Method (MethodID, Package, ClassName, Method, LOC, CYCLO, ATFD, LAA, is_Long_Method, iPlasma, PMD, is_Feature_Envy);
+				FileRow m = new FileRow (MethodID, Package, ClassName, Method, LOC, CYCLO, ATFD, LAA, is_Long_Method, iPlasma, PMD, is_Feature_Envy);
 				Rows.add(m);
 
 			}
@@ -121,8 +117,7 @@ public class ExcelReader {
 		catch (IOException e){
 			e.printStackTrace();
 		}
-	}
-	public ArrayList<Method> getRows(){
+		
 		return Rows;
 	}
 }

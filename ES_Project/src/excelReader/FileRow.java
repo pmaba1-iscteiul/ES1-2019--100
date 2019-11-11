@@ -1,6 +1,6 @@
 package excelReader;
 
-public class Method {
+public class FileRow {
 
 	private final int MethodID;
 	private final String Package;
@@ -15,7 +15,7 @@ public class Method {
 	private final boolean iPlasma;
 	private final boolean is_Feature_Envy;
 
-	public Method(int methodID, String package1, String className, String method, int lOC, int cYCLO, int aTFD,
+	public FileRow(int methodID, String package1, String className, String method, int lOC, int cYCLO, int aTFD,
 			double lAA, boolean is_Long_Method, boolean pMD, boolean iPlasma, boolean is_Feature_Envy) {
 
 		MethodID = methodID;
