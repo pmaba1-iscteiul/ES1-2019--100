@@ -1,7 +1,6 @@
 package quality;
 
 import java.util.ArrayList;
-import excelReader.ExcelReader;
 import excelReader.FileRow;
 import utils.DataBase;
 
@@ -27,7 +26,7 @@ public class RulesQuality {
 	 * @param DataBase object 
 	 */
 	public RulesQuality (DataBase db/* objeto */) {
-		this.rows = db.getExcel_file();
+		this.rows.addAll(db.getExcel_file());
 //		this.compare();
 	}
 

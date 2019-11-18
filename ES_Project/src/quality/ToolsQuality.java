@@ -1,7 +1,6 @@
 package quality;
 
 import java.util.ArrayList;
-import excelReader.ExcelReader;
 import excelReader.FileRow;
 import utils.DataBase;
 
@@ -23,7 +22,7 @@ public class ToolsQuality{
 	private int iPlasma_DII = 0;
 	private int iPlasma_ADCI = 0;
 	private int iPlasma_ADII = 0;
-	private final ArrayList<FileRow> rows;
+	private ArrayList<FileRow> rows;
 	
 	/**
 	 * RulesQuality constructor  
@@ -31,7 +30,7 @@ public class ToolsQuality{
 	 */
 	
 	public ToolsQuality(DataBase db) {
-		this.rows = db.getExcel_file();  
+		this.rows.addAll(db.getExcel_file());  
 		this.compare();
 	}
 
@@ -108,24 +107,24 @@ public class ToolsQuality{
 	
 	private void compare(){
 		for(FileRow method : rows) {
-			if(method.is_Long_Method == true) {
-				if(method.PMD.equal == true) {
+			if(method.isIs_Long_Method() == true) {
+				if(method.isPMD() == true) {
 					PMD_DCI ++;
 				} else {
 					PMD_ADII ++;
 				}
-				if(method.iPlasma == true) {
+				if(method.isiPlasma() == true) {
 					iPlasma_DCI ++;
 				} else {
 					iPlasma_ADII ++;
 				}	
 			} else {
-				if(method.PMD == false) {
+				if(method.isPMD() == false) {
 					PMD_ADCI ++;
 				} else {
 					PMD_DII ++;
 				}
-				if(method.iPlasma == false) {
+				if(method.isiPlasma() == false) {
 					iPlasma_ADCI ++;
 				} else {
 					iPlasma_DII ++;
