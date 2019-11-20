@@ -1,6 +1,6 @@
 package quality;
 
-import java.util.ArrayList;
+import java.util.List;
 import excelReader.FileRow;
 import utils.DataBase;
 
@@ -19,22 +19,22 @@ public class RulesQuality {
 	private int DII = 0;	
 	private int ADCI = 0;
 	private int ADII = 0;
-	private ArrayList<FileRow> rows;
-	
+	private List<FileRow> rows;
+
 	/**
 	 * RulesQuality constructor  
 	 * @param DataBase object 
 	 */
-	public RulesQuality (DataBase db/* objeto */) {
-		this.rows.addAll(db.getExcel_file());
-//		this.compare();
+	public RulesQuality (DataBase db) {
+		this.rows = db.getExcel_file();
+		//		this.compare();
 	}
 
 	/**
 	 * Returns the number of correctly identified defects by the rule
 	 * @return the DCI counter
 	 */
-	
+
 	public int getDCI() {
 		return DCI;
 	}
@@ -43,7 +43,7 @@ public class RulesQuality {
 	 * Returns the number of incorrectly identified defects by the rule
 	 * @return the DII counter
 	 */
-	
+
 	public int getDII() {
 		return DII;
 	}
@@ -52,7 +52,7 @@ public class RulesQuality {
 	 * Returns the number of correctly identified absence of defects by the rule
 	 * @return the ADCI counter
 	 */
-	
+
 	public int getADCI() {
 		return ADCI;
 	}
@@ -61,39 +61,43 @@ public class RulesQuality {
 	 * Returns the number of incorrectly identified absence of defects by the rule
 	 * @return the ADII counter
 	 */
-	
+
 	public int getADII() {
 		return ADII;
 	}
-		
-// preciso de ver se é para comparar o resultado da regra com is_Long_Method ou com is_Feature_Envy
-//	private void compare(){
-//		for(FileRow method : rows) {
-//			
-//			
-//			if(method.is_Long_Method == true) {
-//				}
-//			else {
-//				
-//			}	
-//			
-//		}
-//	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	// preciso de ver se é para comparar o resultado da regra com is_Long_Method ou com is_Feature_Envy
+	private void compare(){
+		for(FileRow method : rows) {
+			if(ruleName. equals("is_Long_Method")) {
+				if(method.isIs_Long_Method == true) {
+					if(result == true) {
+						DCI ++;
+					} else {
+						ADII ++;
+					}	
+				} else {
+					if(result == false) {
+						ADCI ++;
+					} else {
+						DII ++;
+					}	
+				}
+			} else if (ruleName. equals("is_Feature_Envy")) {
+				if(method.isIs_Feature_Envy == true) {
+					if(result == true) {
+						DCI ++;
+					} else {
+						ADII ++;
+					}	
+				} else {
+					if(result == false) {
+						ADCI ++;
+					} else {
+						DII ++;
+					}	
+				}
+			}
+		}
+	}
 }
