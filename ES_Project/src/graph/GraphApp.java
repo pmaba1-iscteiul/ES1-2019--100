@@ -6,7 +6,10 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.ui.ApplicationFrame;
 import org.jfree.data.category.CategoryDataset; 
-import org.jfree.data.category.DefaultCategoryDataset; 
+import org.jfree.data.category.DefaultCategoryDataset;
+
+import quality.ToolsQuality;
+//import utils.DataBase; 
 
 
 /**
@@ -20,12 +23,14 @@ public class GraphApp extends ApplicationFrame {
 	/**
 	 * GraphApp constructor 
 	 */
-	public GraphApp( String applicationTitle , String chartTitle ) {
-		super( "" );       
+	ToolsQuality toolsQuality;
+	public GraphApp(ToolsQuality toolsQuality ) {
+		super( "Histogram" ); 
+		this.toolsQuality = toolsQuality;
 		JFreeChart barChart = ChartFactory.createBarChart(
-				chartTitle,           
-				"x_axis",            
-				"y_axis",            
+				"Histogram",           
+				"",            
+				"",            
 				createDataset(),          
 				PlotOrientation.VERTICAL,           
 				true, true, false);
@@ -33,6 +38,9 @@ public class GraphApp extends ApplicationFrame {
 		ChartPanel chartPanel = new ChartPanel( barChart );        
 		chartPanel.setPreferredSize(new java.awt.Dimension( 560 , 367 ) );        
 		setContentPane( chartPanel ); 
+		this.pack( );        
+		this.setVisible( true ); 
+		this.setResizable(false);
 	}
 
 	/**
@@ -40,36 +48,50 @@ public class GraphApp extends ApplicationFrame {
 	 * @return CategoryDataset
 	 */
 	private CategoryDataset createDataset( ) {
-		final String iPlasma = "iPlasma";        
-		final String PMD = "PMD";        
+		final String PMD =  "PMD";       
+		final String iPlasma = "iPlasma";       
 
-		final String a = "x_a";        
-		final String b = "x_b";        
-		final String c = "x_c";        
-		final String d = "x_d";        
+		final String dii = "DII";        
+		final String adci = "ADCI";        
+		final String adii = "ADII";        
+		final String dci = "DCI";        
 
 		final DefaultCategoryDataset dataset = 
 				new DefaultCategoryDataset( );  
 
-		dataset.addValue( 1.0 , iPlasma , a );        
-		dataset.addValue( 3.0 , iPlasma , c );        
-		dataset.addValue( 5.0 , iPlasma , b ); 
-		dataset.addValue( 5.0 , iPlasma , d );           
+		dataset.addValue( toolsQuality.getPMD_DII() , PMD , dii );        
+		dataset.addValue( toolsQuality.getPMD_ADCI() , PMD , adci );        
+		dataset.addValue( toolsQuality.getPMD_ADII() , PMD , adii ); 
+		dataset.addValue( toolsQuality.getPMD_DCI() , PMD , dci );           
 
-		dataset.addValue( 5.0 , PMD , a );        
-		dataset.addValue( 6.0 , PMD , c );       
-		dataset.addValue( 100.0 , PMD , b );        
-		dataset.addValue( 4.0 , PMD , d );
-
+		dataset.addValue( toolsQuality.getiPlasma_DII() , iPlasma , dii );        
+		dataset.addValue( toolsQuality.getiPlasma_ADCI() , iPlasma , adci );       
+		dataset.addValue( toolsQuality.getiPlasma_ADII() , iPlasma , adii );        
+		dataset.addValue( toolsQuality.getiPlasma_DCI() , iPlasma , dci );
 
 		return dataset; 
 	}
-	
-//  Para Testar
-//	public static void main( String[ ] args ) {
-//		GraphApp chart = new GraphApp("applicationTitle", 
-//				"chartTitle");
-//		chart.pack( );        
-//		chart.setVisible( true ); 
+
+
+//	public static void main(String[] args) {
+//		DataBase db = new DataBase("/Users/r.dinis/Downloads/Long-Method.xlsx");
+//		//System.out.println(db.getExcel_file());
+//		ToolsQuality tq = new ToolsQuality(db);
+//
+//
+//		GraphApp chart = new GraphApp(tq);
+//
+//		System.out.println("PDM:");
+//		System.out.println("DCI =" + tq.getPMD_DCI());
+//		System.out.println("DII =" + tq.getPMD_DII());
+//		System.out.println("ADCI =" + tq.getPMD_ADCI());
+//		System.out.println("ADII =" + tq.getPMD_ADII());
+//		System.out.println("iPlasma:");
+//		System.out.println("DCI =" + tq.getiPlasma_DCI());
+//		System.out.println("DII =" + tq.getiPlasma_DII());
+//		System.out.println("ADCI =" + tq.getiPlasma_ADCI());
+//		System.out.println("ADII =" + tq.getiPlasma_ADII());
+//
+//
 //	}
 }
