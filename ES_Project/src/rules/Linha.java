@@ -3,7 +3,8 @@ package rules;
 /**
  * @author Francisco Raimundo
  *
- *Classe criada para conseguir implementar e testar até o Batoca fazer,
+ *Classe criada para conseguir implementar e testar até o 
+ *Batoca fazer,
  *sendo no final desnecessária e vou fazer a migração assim que possa.
  *
  */

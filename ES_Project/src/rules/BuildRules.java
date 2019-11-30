@@ -1,15 +1,15 @@
-package francisco;
+package rules;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import francisco.Column;
-import francisco.LineResult;
-import francisco.Linha;
-import francisco.LogicOperator;
-import francisco.Method;
-import francisco.ObjectRuleVO;
-import francisco.ObjectVO;
+import rules.Column;
+import rules.LineResult;
+import rules.Linha;
+import rules.LogicOperator;
+import rules.Method;
+import rules.ObjectRuleVO;
+import rules.ObjectVO;
 
 /**
  * @author Francisco Raimundo
@@ -72,6 +72,14 @@ public class BuildRules {
 
 	}
 
+	/**
+	 * @param objectRuleVO
+	 * @param linha
+	 * 
+	 * método principal em que para cada linha, vemos o resultado que tem de dar, consoantes
+	 * as escolhas feitas pelo utilizador e é colocado num objeto final
+	 * para ser comparado com as regras existentes no ficheiro
+	 */
 	public void getAndSetBoolean(ObjectRuleVO objectRuleVO, ArrayList<Method> linha) {
 
 		boolean boleano = false;
@@ -98,6 +106,13 @@ public class BuildRules {
 		arrayLineResult.clear();
 	}
 
+	/**
+	 * @param Array com os operadores lógicos
+	 * @return boolean
+	 * 
+	 * método para calcular o boolean da regra, dependendo dos limites 
+	 * escolhidos pelo utilizador
+	 */
 	private boolean contasComOperadoresLogicos(ArrayList<LogicOperator> arrayLogicOperators) {
 
 		boolean auxBooleanIntermedio=false;
@@ -114,6 +129,14 @@ public class BuildRules {
 		return auxBoolean;
 	}
 
+	/**
+	 * @param boolean1
+	 * @param boolean2
+	 * @param operador lógico
+	 * @return boolean final
+	 * 
+	 * faz a conta, do boolean que resulta de 2 boolean com um operador lógico
+	 */
 	private boolean calculaBoolean(Boolean boolean1, Boolean boolean2, LogicOperator logicOperator) {
 		boolean auxBoolean=false;
 		if(logicOperator.equals(LogicOperator.AND)) {
@@ -136,6 +159,14 @@ public class BuildRules {
 	}
 
 
+	/**
+	 * @param linha
+	 * @param ObjectVO
+	 * 
+	 * Verifica se o utilizador escolheu < ou > e verifica com o valor da linha
+	 * se dá true ou false .
+	 * No final coloca tudo num array para poder ser usado posteriormente
+	 */
 	public void colocaNoArrayBooleans(Linha linha, ObjectVO a) {
 
 		double limiteNaLinha = getLimiteDaLinha(linha, a);
@@ -156,6 +187,13 @@ public class BuildRules {
 			
 	}
 
+	/**
+	 * @param linha
+	 * @param ObjectVO
+	 * @return double
+	 * 
+	 * Coloca no double o valor dependendo de qual feature foi escolhida
+	 */
 	private double getLimiteDaLinha(Linha l, ObjectVO a) {
 		Double auxDouble = 0.0;
 		try {

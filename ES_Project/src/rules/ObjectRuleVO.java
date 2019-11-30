@@ -33,15 +33,27 @@ public class ObjectRuleVO implements Serializable{
 	public void setListObjectsVO(ArrayList<ObjectVO> listObjectsVO) {
 		this.listObjectsVO = listObjectsVO;
 	}
+	/**
+	 * @return nome da regra
+	 */
 	public String getRuleName() {
 		return ruleName;
 	}
+	/**
+	 * @param nome da regra
+	 */
 	public void setRuleName(String ruleName) {
 		this.ruleName = ruleName;
 	}
+	/**
+	 * @return array com os operadores lógicos
+	 */
 	public ArrayList<LogicOperator> getListLogicOperators() {
 		return listOperators;
 	}
+	/**
+	 * @param array com os operadores lógicos
+	 */
 	public void setListOperators(ArrayList<LogicOperator> listOperators) {
 		this.listOperators = listOperators;
 	}
