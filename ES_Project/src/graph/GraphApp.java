@@ -9,7 +9,7 @@ import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 import quality.ToolsQuality;
-//import utils.DataBase; 
+import utils.DataBase; 
 
 
 /**
@@ -21,7 +21,9 @@ import quality.ToolsQuality;
 public class GraphApp extends ApplicationFrame {
 
 	/**
-	 * GraphApp constructor 
+	 * GraphApp constructor.
+	 * Graphic interface settings 
+	 * @param ToolsQuality toolsQuality 
 	 */
 	ToolsQuality toolsQuality;
 	public GraphApp(ToolsQuality toolsQuality ) {
