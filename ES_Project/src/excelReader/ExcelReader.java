@@ -14,7 +14,27 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+/**
+ *
+ * The aim of this class is to read the excel file provided 
+ * 
+ * @author Pedro Batoca
+ *
+ *
+ */
 public class ExcelReader {
+	
+	
+	/**
+	 * 
+	 * Read File was the method used to read the excel file. It reads all the rows and put the row's data into a List.
+	 * In order to read this file the API from APACHE POI was used
+	 * 
+	 * 
+	 * @param String "FilePath"
+	 * @return List<FileRow>
+	 */
+	
 	
 	public static List<FileRow> ReadFile (String FilePath) {
 		List<FileRow> Rows = new ArrayList<>();
@@ -35,9 +55,9 @@ public class ExcelReader {
 				String Package = "";
 				String ClassName = "";
 				String Method = "";
-				int LOC = 0;
-				int CYCLO = 0;
-				int ATFD = 0;
+				double LOC = 0;
+				double CYCLO = 0;
+				double ATFD = 0;
 				double LAA = 0.0;
 				boolean is_Long_Method = false;
 				boolean PMD = false;
@@ -67,15 +87,15 @@ public class ExcelReader {
 						break;
 
 					case 4:
-						LOC = ((int) nextCell.getNumericCellValue()); 
+						LOC = nextCell.getNumericCellValue(); 
 						break;
 
 					case 5:
-						CYCLO = ((int) nextCell.getNumericCellValue());
+						CYCLO = nextCell.getNumericCellValue();
 						break;
 
 					case 6:
-						ATFD = ((int) nextCell.getNumericCellValue());
+						ATFD = nextCell.getNumericCellValue();
 						break;
 
 					case 7:
