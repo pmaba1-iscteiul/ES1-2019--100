@@ -11,7 +11,7 @@ public class DataBase {
 	
 	private List<FileRow>excel_file;
 	private ToolsQuality tools;
-	private List<org.apache.poi.ss.formula.functions.Column> columns;
+	private List<Column> columns;
 
 	public DataBase(String path) {
 		super();
