@@ -1,6 +1,7 @@
 package rules;
 
 import java.util.ArrayList;
+import utils.DataBase;
 import java.util.Iterator;
 
 import rules.Column;
@@ -17,7 +18,8 @@ import rules.ObjectVO;
  */
 
 public class BuildRules {
-
+	
+	ObjectRuleVO objectRuleVO;
 	String auxFeature = "";
 	double auxLimit = 0.0d;
 	String auxOperator;
@@ -26,51 +28,15 @@ public class BuildRules {
 	ArrayList<Boolean> arrayIntermedio = new ArrayList<>();
 	ArrayList<Boolean> arrayFinal = new ArrayList<>();
 	ArrayList<Linha> arrayLinhas;
-
-	public static void main(String[] args) {
-
-		BuildRules buildRules = new BuildRules();
-
-		Linha linha = new Linha();
-		linha.setLOC(5);
-		linha.setCYCLO(5);
-		linha.setATFD(5);
-		linha.setLAA(5);
-		ArrayList<Linha> arrayLinhas = new ArrayList<>();
-		arrayLinhas.add(linha);
-
-		ObjectVO objectVO = new ObjectVO();
-		objectVO.setMetric("LOC");
-		objectVO.setLimit(6);
-		objectVO.setOperator("<");
-
-		ObjectVO objectVOO = new ObjectVO();
-		objectVOO.setMetric("ATFD");
-		objectVOO.setLimit(6);
-		objectVOO.setOperator(">");
-
-		ObjectVO objectVOOO = new ObjectVO();
-		objectVOOO.setMetric("LAA");
-		objectVOOO.setLimit(6);
-		objectVOOO.setOperator("<");
-
-		ArrayList<ObjectVO> arrayObjects = new ArrayList<>();
-		arrayObjects.add(objectVO);
-		arrayObjects.add(objectVOO);
-		arrayObjects.add(objectVOOO);
-
-		ObjectRuleVO objectRuleVO = new ObjectRuleVO();
-		objectRuleVO.setListObjectsVO(arrayObjects);
-
-		ArrayList<LogicOperator> arrayLogicsOperator = new ArrayList<>();
-		arrayLogicsOperator.add(LogicOperator.AND);
-		arrayLogicsOperator.add(LogicOperator.OR);
-
-		objectRuleVO.setListOperators(arrayLogicsOperator);
-
-		buildRules.getAndSetBoolean(objectRuleVO, arrayLinhas);
-
+	DataBase data = new DataBase();
+	
+	public BuildRules(ObjectRuleVO objectRuleVO, DataBase data) {
+		this.objectRuleVO=objectRuleVO;
+		this.data=data;
+		arrayLinhas = data.getExcel_file();
+		getAndSetBoolean();
 	}
+	
 
 	/**
 	 * @param objectRuleVO
@@ -80,13 +46,13 @@ public class BuildRules {
 	 * as escolhas feitas pelo utilizador e é colocado num objeto final
 	 * para ser comparado com as regras existentes no ficheiro
 	 */
-	public void getAndSetBoolean(ObjectRuleVO objectRuleVO, ArrayList<Method> linha) {
+	public void getAndSetBoolean() {
 
 		boolean boleano = false;
 		LineResult lineResult;
 		Column column;
 		
-		for(Method l : linha) {
+		for(Method l : arrayLinhas) {
 
 			arrayObjectsVO = objectRuleVO.getListObjectsVO();
 			arrayLogicOperators = objectRuleVO.getListLogicOperators();
@@ -103,6 +69,7 @@ public class BuildRules {
 		}
 		column.setArray(arrayLineResult);
 		column.setRuleName(objectRuleVO.getRuleName());
+		data.addColumn(column);
 		arrayLineResult.clear();
 	}
 
