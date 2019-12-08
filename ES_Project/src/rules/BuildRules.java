@@ -8,7 +8,6 @@ import rules.Column;
 import rules.LineResult;
 import rules.Linha;
 import rules.LogicOperator;
-import rules.Method;
 import rules.ObjectRuleVO;
 import rules.ObjectVO;
 
@@ -19,16 +18,16 @@ import rules.ObjectVO;
 
 public class BuildRules {
 	
-	ObjectRuleVO objectRuleVO;
-	String auxFeature = "";
-	double auxLimit = 0.0d;
-	String auxOperator;
-	ArrayList<ObjectVO> arrayObjectsVO;
-	ArrayList<LogicOperator> arrayLogicOperators;
-	ArrayList<Boolean> arrayIntermedio = new ArrayList<>();
-	ArrayList<Boolean> arrayFinal = new ArrayList<>();
-	ArrayList<Linha> arrayLinhas;
-	DataBase data = new DataBase();
+	private ObjectRuleVO objectRuleVO;
+	private String auxFeature = "";
+	private double auxLimit = 0.0d;
+	private String auxOperator;
+	private ArrayList<ObjectVO> arrayObjectsVO;
+	private ArrayList<LogicOperator> arrayLogicOperators;
+	private ArrayList<Boolean> arrayIntermedio = new ArrayList<>();
+	private ArrayList<Boolean> arrayFinal = new ArrayList<>();
+	private ArrayList<Linha> arrayLinhas;
+	private DataBase data;
 	
 	public BuildRules(ObjectRuleVO objectRuleVO, DataBase data) {
 		this.objectRuleVO=objectRuleVO;
@@ -52,7 +51,7 @@ public class BuildRules {
 		LineResult lineResult;
 		Column column;
 		
-		for(Method l : arrayLinhas) {
+		for(FileRow l : arrayLinhas) {
 
 			arrayObjectsVO = objectRuleVO.getListObjectsVO();
 			arrayLogicOperators = objectRuleVO.getListLogicOperators();
@@ -108,8 +107,6 @@ public class BuildRules {
 		boolean auxBoolean=false;
 		if(logicOperator.equals(LogicOperator.AND)) {
 			if(boolean1.equals(true) && boolean2.equals(true)) {
-				System.out.println(boolean1);
-				System.out.println(boolean2);
 				auxBoolean=true;
 			} else {
 				auxBoolean=false;
@@ -161,7 +158,7 @@ public class BuildRules {
 	 * 
 	 * Coloca no double o valor dependendo de qual feature foi escolhida
 	 */
-	private double getLimiteDaLinha(Linha l, ObjectVO a) {
+	private double getLimiteDaLinha(FileRow l, ObjectVO a) {
 		Double auxDouble = 0.0;
 		try {
 			switch(a.getFeature()) {
