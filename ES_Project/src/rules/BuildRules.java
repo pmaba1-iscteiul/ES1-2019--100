@@ -34,7 +34,7 @@ public class BuildRules {
 		this.data=data;
 		arrayLinhas = data.getExcel_file();
 		getAndSetBoolean();
-	}
+	 }
 	
 
 	/**
