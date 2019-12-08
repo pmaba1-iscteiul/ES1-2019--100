@@ -24,7 +24,7 @@ public class RulesQuality {
 	private int ADCI = 0;
 	private int ADII = 0;
 	private List<FileRow> rows;
-	private ArrayList<Column> columns;
+	private List<Column> columns;
 
 
 
@@ -100,7 +100,7 @@ public class RulesQuality {
 						}
 					}
 				}
-			} else if (col.getRuleName.equals("is_Feature_Envy")) {
+			} else if (col.getRuleName().equals("is_Feature_Envy")) {
 				lineResults = col.getArray();
 				for(FileRow method : rows) {
 					for(LineResult line : lineResults) {
