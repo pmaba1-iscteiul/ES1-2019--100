@@ -1,15 +1,10 @@
 package rules;
 
 import java.util.ArrayList;
-import utils.DataBase;
-import java.util.Iterator;
+import java.util.List;
 
-import rules.Column;
-import rules.LineResult;
-import rules.Linha;
-import rules.LogicOperator;
-import rules.ObjectRuleVO;
-import rules.ObjectVO;
+import excelReader.FileRow;
+import utils.DataBase;
 
 /**
  * @author Francisco Raimundo
@@ -22,11 +17,11 @@ public class BuildRules {
 	private String auxFeature = "";
 	private double auxLimit = 0.0d;
 	private String auxOperator;
-	private ArrayList<ObjectVO> arrayObjectsVO;
-	private ArrayList<LogicOperator> arrayLogicOperators;
-	private ArrayList<Boolean> arrayIntermedio = new ArrayList<>();
-	private ArrayList<Boolean> arrayFinal = new ArrayList<>();
-	private ArrayList<Linha> arrayLinhas;
+	private List<ObjectVO> arrayObjectsVO;
+	private List<LogicOperator> arrayLogicOperators;
+	private List<Boolean> arrayIntermedio = new ArrayList<>();
+	private List<Boolean> arrayFinal = new ArrayList<>();
+	private List<FileRow> arrayLinhas;
 	private DataBase data;
 	
 	public BuildRules(ObjectRuleVO objectRuleVO, DataBase data) {
