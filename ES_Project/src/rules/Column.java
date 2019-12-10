@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * Coluna completa, em que temos o nome do método escolhido pelo utilizador e todos os resultados (true ou false) para todos os IDs
  *
  */
-public class Column implements Serializable {
+public class Column {
 
 	ArrayList<LineResult> array;
 	String ruleName;

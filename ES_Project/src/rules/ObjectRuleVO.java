@@ -3,9 +3,6 @@ package rules;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import francisco.LogicOperator;
-import francisco.ObjectVO;
-
 /**
  * @author Francisco Raimundo
  *

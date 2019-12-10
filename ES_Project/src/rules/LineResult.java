@@ -6,7 +6,7 @@ package rules;
  * Objeto final, com o ID e o resultado desse ID
  *
  */
-public class LineResult implements Serializable{
+public class LineResult{
 
 	int methodID;
 	boolean result;

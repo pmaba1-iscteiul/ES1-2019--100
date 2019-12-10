@@ -74,7 +74,7 @@ public class BuildRules {
 	 * método para calcular o boolean da regra, dependendo dos limites 
 	 * escolhidos pelo utilizador
 	 */
-	private boolean contasComOperadoresLogicos(ArrayList<LogicOperator> arrayLogicOperators) {
+	private boolean contasComOperadoresLogicos(List<LogicOperator> arrayLogicOperators) {
 
 		boolean auxBooleanIntermedio=false;
 		boolean auxBoolean=false;
@@ -126,7 +126,7 @@ public class BuildRules {
 	 * se dá true ou false .
 	 * No final coloca tudo num array para poder ser usado posteriormente
 	 */
-	public void colocaNoArrayBooleans(Linha linha, ObjectVO a) {
+	public void colocaNoArrayBooleans(FileRow linha, ObjectVO a) {
 
 		double limiteNaLinha = getLimiteDaLinha(linha, a);
 		
