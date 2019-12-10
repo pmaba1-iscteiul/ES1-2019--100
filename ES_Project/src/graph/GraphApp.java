@@ -80,7 +80,7 @@ public class GraphApp extends ApplicationFrame {
 	}
 
 	/**
-	 * Create and returns the data of histogram for Tools.
+	 * Create and returns the data base of histogram for Tools.
 	 * @return CategoryDataset
 	 */
 	private CategoryDataset createDatasetTools( ) {
@@ -109,20 +109,17 @@ public class GraphApp extends ApplicationFrame {
 	}
 	
 	/**
-	 * Create and returns the data of histogram for Rules.
+	 * Create and returns the data base of histogram for Rules.
 	 * @return CategoryDataset
 	 */
 	private CategoryDataset createDatasetRules( ) {
 		final String Rules =  "Rules";       
-
 		final String dii = "DII";        
 		final String adci = "ADCI";        
 		final String adii = "ADII";        
 		final String dci = "DCI";        
-
 		final DefaultCategoryDataset dataset = 
 				new DefaultCategoryDataset( );  
-
 		dataset.addValue( rulesQuality.getDII() , Rules , dii );        
 		dataset.addValue( rulesQuality.getADCI() , Rules , adci );       
 		dataset.addValue( rulesQuality.getADII() , Rules , adii );        
