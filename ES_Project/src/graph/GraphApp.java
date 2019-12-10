@@ -8,6 +8,7 @@ import org.jfree.chart.ui.ApplicationFrame;
 import org.jfree.data.category.CategoryDataset; 
 import org.jfree.data.category.DefaultCategoryDataset;
 
+import quality.RulesQuality;
 import quality.ToolsQuality;
 import utils.DataBase; 
 
@@ -19,21 +20,54 @@ import utils.DataBase;
  * of the quality of iPlasma and PMD tools through a histogram.
  */
 public class GraphApp extends ApplicationFrame {
+	ToolsQuality toolsQuality;
+	RulesQuality rulesQuality;
 
 	/**
 	 * GraphApp constructor.
 	 * Graphic interface settings 
-	 * @param ToolsQuality toolsQuality 
+	 * @param rtQuality data to make the histograms, can be RulesQuality or ToolsQuality
 	 */
-	ToolsQuality toolsQuality;
-	public GraphApp(ToolsQuality toolsQuality ) {
-		super( "Histogram" ); 
-		this.toolsQuality = toolsQuality;
+	public GraphApp(Object rtQuality ) {
+		super( "Histogram" );
+		if(rtQuality instanceof ToolsQuality) {
+			this.toolsQuality = (ToolsQuality) rtQuality;
+			createHistogramTools();
+		}
+		else if(rtQuality instanceof RulesQuality) {
+			this.rulesQuality = (RulesQuality) rtQuality;
+			createHistogramRules();
+		}
+	}
+	
+	/**
+	 * Creates the interface of Histogram for Rules 
+	 */
+	private void createHistogramRules() {
 		JFreeChart barChart = ChartFactory.createBarChart(
-				"Histogram",           
+				"Histogram Rules",           
 				"",            
 				"",            
-				createDataset(),          
+				createDatasetRules(),          
+				PlotOrientation.VERTICAL,           
+				true, true, false);
+
+		ChartPanel chartPanel = new ChartPanel( barChart );        
+		chartPanel.setPreferredSize(new java.awt.Dimension( 560 , 367 ) );        
+		setContentPane( chartPanel ); 
+		this.pack( );        
+		this.setVisible( true ); 
+		this.setResizable(false);
+	}
+	/**
+	 * Creates the interface of Histogram for Tools 
+	 */
+	private void createHistogramTools() {
+		JFreeChart barChart = ChartFactory.createBarChart(
+				"Histogram Tools",           
+				"",            
+				"",            
+				createDatasetTools(),          
 				PlotOrientation.VERTICAL,           
 				true, true, false);
 
@@ -46,10 +80,10 @@ public class GraphApp extends ApplicationFrame {
 	}
 
 	/**
-	 * Create and returns the data of histogram.
+	 * Create and returns the data of histogram for Tools.
 	 * @return CategoryDataset
 	 */
-	private CategoryDataset createDataset( ) {
+	private CategoryDataset createDatasetTools( ) {
 		final String PMD =  "PMD";       
 		final String iPlasma = "iPlasma";       
 
@@ -73,27 +107,28 @@ public class GraphApp extends ApplicationFrame {
 
 		return dataset; 
 	}
+	
+	/**
+	 * Create and returns the data of histogram for Rules.
+	 * @return CategoryDataset
+	 */
+	private CategoryDataset createDatasetRules( ) {
+		final String Rules =  "Rules";       
 
+		final String dii = "DII";        
+		final String adci = "ADCI";        
+		final String adii = "ADII";        
+		final String dci = "DCI";        
 
-//	public static void main(String[] args) {
-//		DataBase db = new DataBase("/Users/r.dinis/Downloads/Long-Method.xlsx");
-//		//System.out.println(db.getExcel_file());
-//		ToolsQuality tq = new ToolsQuality(db);
-//
-//
-//		GraphApp chart = new GraphApp(tq);
-//
-//		System.out.println("PDM:");
-//		System.out.println("DCI =" + tq.getPMD_DCI());
-//		System.out.println("DII =" + tq.getPMD_DII());
-//		System.out.println("ADCI =" + tq.getPMD_ADCI());
-//		System.out.println("ADII =" + tq.getPMD_ADII());
-//		System.out.println("iPlasma:");
-//		System.out.println("DCI =" + tq.getiPlasma_DCI());
-//		System.out.println("DII =" + tq.getiPlasma_DII());
-//		System.out.println("ADCI =" + tq.getiPlasma_ADCI());
-//		System.out.println("ADII =" + tq.getiPlasma_ADII());
-//
-//
-//	}
+		final DefaultCategoryDataset dataset = 
+				new DefaultCategoryDataset( );  
+
+		dataset.addValue( rulesQuality.getDII() , Rules , dii );        
+		dataset.addValue( rulesQuality.getADCI() , Rules , adci );       
+		dataset.addValue( rulesQuality.getADII() , Rules , adii );        
+		dataset.addValue( rulesQuality.getDCI() , Rules , dci );
+
+		return dataset; 
+	}
+	
 }
