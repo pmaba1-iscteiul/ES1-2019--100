@@ -1,5 +1,6 @@
 package utils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import excelReader.ExcelReader;
@@ -9,7 +10,7 @@ import rules.Column;
 public class DataBase {
 	
 	private List<FileRow>excel_file;
-	private List<Column> columns;
+	private List<Column> columns = new ArrayList<Column>();
 
 	public DataBase(String path) {
 		super();

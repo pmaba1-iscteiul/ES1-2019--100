@@ -62,7 +62,7 @@ public class GraphApp extends ApplicationFrame {
 	 */
 	public void createHistogramTools() {
 		JFreeChart barChart = ChartFactory.createBarChart(
-				"Histogram Tools",           
+				"Histogram Tools",         
 				"",            
 				"",            
 				createDatasetTools(),          
@@ -92,7 +92,7 @@ public class GraphApp extends ApplicationFrame {
 			for (int j = 0; j < indicators.size(); j++) {
 				dataset.addValue(results.get(j) , tools.get(i) , indicators.get(j));
 			}
-		}      
+		}    
 		return dataset; 
 	}
 
@@ -127,7 +127,7 @@ public class GraphApp extends ApplicationFrame {
 	 * of the given tool returning a list with DCI, DII, ADCI and ADII counter
 	 * @return list of results for the tools' quality 
 	 */
-	private List<Integer> compareTools(String toolName){
+	public List<Integer> compareTools(String toolName){
 
 		List<FileRow> rows = db.getExcel_file();
 		
@@ -141,6 +141,7 @@ public class GraphApp extends ApplicationFrame {
 				result = method.isPMD();
 			else if (toolName.equals("iPlasma"))
 				result = method.isiPlasma();
+			else break;
 			type = method.isIs_Long_Method();
 			aux = aux_compare(type, result);
 			int x = results.get(aux) + 1;
@@ -156,7 +157,7 @@ public class GraphApp extends ApplicationFrame {
 	 * @return list of results for the rules' quality 
 	 */
 
-	private List<Integer> compareRules(String ruleName){
+	public List<Integer> compareRules(String ruleName){
 
 		List<FileRow> rows = db.getExcel_file();
 		List<Column> columns = db.getColumns();
@@ -172,15 +173,13 @@ public class GraphApp extends ApplicationFrame {
 				for (int i = 0; i < rows.size(); i++) {
 					if(rows.get(i).getMethodID() == lineResults.get(i).getMethodID()) {
 						result = lineResults.get(i).isResult();
-						if (col.getRuleType().equals("is_Long_Method")) {
+						if (col.getRuleType().equals("is_Long_Method")) 
 							type = rows.get(i).isIs_Long_Method();
-							aux = aux_compare(type, result);
-							results.set(aux, results.get(aux) + 1);
-						} else if (col.getRuleType().equals("is_Feature_Envy")) {
+						else if (col.getRuleType().equals("is_Feature_Envy")) 
 							type = rows.get(i).isIs_Feature_Envy();
-							aux = aux_compare(type, result);
-							results.set(aux, results.get(aux) + 1);
-						}
+						else break;
+						aux = aux_compare(type, result);
+						results.set(aux, results.get(aux) + 1);
 					}
 				}
 			}
@@ -188,7 +187,7 @@ public class GraphApp extends ApplicationFrame {
 		return results;
 	}
 
-	private Integer aux_compare(boolean type, boolean aval){
+	public Integer aux_compare(boolean type, boolean aval){
 		if(type == true) {
 			if(aval == true) 
 				return 0;
