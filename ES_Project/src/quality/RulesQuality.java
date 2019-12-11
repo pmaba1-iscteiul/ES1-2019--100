@@ -2,7 +2,6 @@ package quality;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import rules.LineResult;
 import rules.Column;
 import excelReader.FileRow;
@@ -24,9 +23,7 @@ public class RulesQuality {
 	private int ADCI = 0;
 	private int ADII = 0;
 	private List<FileRow> rows;
-	private ArrayList<Column> columns;
-
-
+	private List<Column> columns;
 
 	/**
 	 * RulesQuality constructor  
@@ -34,7 +31,6 @@ public class RulesQuality {
 	 */
 	public RulesQuality (DataBase db) {
 		this.rows = db.getExcel_file();
-		this.compare();
 		this.columns = db.getColumns();
 	}
 
@@ -75,49 +71,51 @@ public class RulesQuality {
 	}
 
 	// preciso de ver se é para comparar o resultado da regra com is_Long_Method ou com is_Feature_Envy
-	private void compare(){
-		ArrayList<LineResult> lineResults;
+	private void compare(String ruleName){
+		List<LineResult> lineResults;
 		for(Column col : columns) {
-			if (col.getRuleName().equals("is_Long_Method")) {
-				lineResults = col.getArray();
-				for(FileRow method : rows) {
-					for(LineResult line : lineResults) {
-						if(method.getMethodID() == line.getMethodID()) {
-							boolean result = line.isResult();
-							if(method.isIs_Long_Method() == true) {
-								if(result == true) {
-									DCI ++;
+			if (col.getRuleName().equals(ruleName)) {
+				if (col.getRuleType().equals("is_Long_Method")) {
+					lineResults = col.getArray();
+					for(FileRow method : rows) {
+						for(LineResult line : lineResults) {
+							if(method.getMethodID() == line.getMethodID()) {
+								boolean result = line.isResult();
+								if(method.isIs_Long_Method() == true) {
+									if(result == true) {
+										DCI ++;
+									} else {
+										ADII ++;
+									}	
 								} else {
-									ADII ++;
-								}	
-							} else {
-								if(result == false) {
-									ADCI ++;
-								} else {
-									DII ++;
-								}	
+									if(result == false) {
+										ADCI ++;
+									} else {
+										DII ++;
+									}	
+								}
 							}
 						}
 					}
-				}
-			} else if (col.getRuleName.equals("is_Feature_Envy")) {
-				lineResults = col.getArray();
-				for(FileRow method : rows) {
-					for(LineResult line : lineResults) {
-						if(method.getMethodID() == line.getMethodID()) {
-							boolean result = line.isResult();					
-							if(method.isIs_Feature_Envy() == true) {
-								if(result == true) {
-									DCI ++;
+				} else if (col.getRuleType().equals("is_Feature_Envy")) {
+					lineResults = col.getArray();
+					for(FileRow method : rows) {
+						for(LineResult line : lineResults) {
+							if(method.getMethodID() == line.getMethodID()) {
+								boolean result = line.isResult();					
+								if(method.isIs_Feature_Envy() == true) {
+									if(result == true) {
+										DCI ++;
+									} else {
+										ADII ++;
+									}	
 								} else {
-									ADII ++;
-								}	
-							} else {
-								if(result == false) {
-									ADCI ++;
-								} else {
-									DII ++;
-								}	
+									if(result == false) {
+										ADCI ++;
+									} else {
+										DII ++;
+									}	
+								}
 							}
 						}
 					}
