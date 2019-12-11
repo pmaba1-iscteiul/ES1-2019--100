@@ -18,6 +18,7 @@ public class DataBase {
 		super();
 		this.excel_file = ExcelReader.ReadFile(path);
 		this.tools = new ToolsQuality(this);
+		this.columns = new ArrayList<Column>();
 
 	}
 

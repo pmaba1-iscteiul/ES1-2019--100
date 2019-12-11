@@ -4,12 +4,17 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -19,7 +24,9 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.text.NumberFormatter;
 
+import rules.LogicOperator;
 import rules.Rule;
 import rules.RulePart;
 import utils.DataBase;
@@ -42,8 +49,8 @@ public class MainWindow {
 	private Stack<JPanel> metrics = new Stack<>();
 	private DataBase data;
 	// create condition panel
-	String condition_comparator = "";
-	int condition_limit = 0;
+	private String condition_comparator = "";
+	//	int condition_limit = 0;
 
 	/**
 	 * Initializes all class atr
@@ -376,17 +383,22 @@ public class MainWindow {
 	 * @param metric_name
 	 * @return
 	 */
-	private JPanel createConditionPanel(String metric, Defect ruleType, List<RulePart> parts, String ruleName) {
+	private JPanel createConditionPanel(String metric, Defect defect, List<RulePart> parts, String ruleName) {
 		JPanel panel = new JPanel(new BorderLayout());
-
 		JLabel centerLabel = new JLabel("Limit: ");
 
 		JPanel top = new JPanel(new GridLayout(1, 3));
 		top.add(new JLabel("Metric: " + metric + "   "));
 		top.add(centerLabel);
-		JTextField limit_text = new JTextField();
+//		JTextField limit_text = new JTextField();
+		NumberFormatter formatter = new NumberFormatter(NumberFormat.getInstance());
+		formatter.setValueClass(Integer.class);
+	    formatter.setMinimum(0);
+	    formatter.setMaximum(Integer.MAX_VALUE);
+	    formatter.setAllowsInvalid(false);
+		JFormattedTextField limit_text = new JFormattedTextField(formatter);
 		top.add(limit_text);
-
+		
 		JPanel center = new JPanel(new GridLayout(1,4));
 		JButton grater_button = new JButton(">");
 		JButton grater_equals_button = new JButton(">=");
@@ -463,17 +475,30 @@ public class MainWindow {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				if (metrics.size() == 1 && parts.size() != 0 ) {
-					parts.add(new RulePart(metric, condition_limit, condition_comparator));
-					buildScreen(metrics.pop(), joinCondition());
-				}else if(metrics.size() == 1) {
-					parts.add(new RulePart(metric, condition_limit, condition_comparator));
-					new Rule(parts, null, ruleName, ruleType);
-					buildScreen(metrics.pop(), metrics.peek());
-				}else {
-					buildScreen(metrics.pop(), metrics.peek());
+				if(!limit_text.getText().isBlank()) {
+					try {
+						int lim = Integer.parseInt(limit_text.getText());
+						if(lim > 0)
+							if(condition_comparator.equals("<") || condition_comparator.equals("<=") ||
+									condition_comparator.equals(">") || condition_comparator.equals(">="))
+								if (metrics.size() == 1 && parts.size() != 0 ) {
+									parts.add(new RulePart(metric, lim, condition_comparator));
+									condition_comparator = "";
+									buildScreen(metrics.pop(), main_panel);
+								}else if(metrics.size() == 1) {
+									parts.add(new RulePart(metric, lim, condition_comparator));
+									new Rule(parts, (List<LogicOperator>)new ArrayList<LogicOperator>(), ruleName, defect);
+									condition_comparator = "";
+									buildScreen(metrics.pop(), joinCondition(parts, ruleName, defect));
+								}else {
+									buildScreen(metrics.pop(), metrics.peek());
+									condition_comparator = "";
+								}
+					} catch (Exception e2) {
+						// TODO: handle exception
+					}
+					condition.add("O Objeto Com a condição");
 				}
-				condition.add("O Objeto Com a condição");
 			}
 		});
 
@@ -488,7 +513,7 @@ public class MainWindow {
 	 * Enables the user to join several conditions previously created. Those are join with a logic operator.
 	 * @return
 	 */
-	private JPanel joinCondition() {
+	private JPanel joinCondition(List<RulePart> parts, String ruleName, Defect defect) {
 		JPanel panel = new JPanel(new BorderLayout());
 		JPanel right = new JPanel(new GridLayout(2,1));
 		JPanel bottom = new JPanel();
