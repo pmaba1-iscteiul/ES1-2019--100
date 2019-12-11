@@ -1,6 +1,7 @@
 package rules;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Francisco Raimundo
@@ -8,38 +9,38 @@ import java.util.ArrayList;
  * Coluna completa, em que temos o nome do método escolhido pelo utilizador e todos os resultados (true ou false) para todos os IDs
  *
  */
-public class Column implements Serializable {
+public class Column {
 
-	ArrayList<LineResult> array;
-	String ruleName;
-	public Column(ArrayList<LineResult> array, String ruleName) {
+	private List<LineResult> array;
+	private String ruleName;
+	private String ruleType;
+
+	public Column(String ruleName, String ruleType) {
 		super();
-		this.array = array;
+		this.array = new ArrayList<LineResult>();
 		this.ruleName = ruleName;
+		this.ruleType = ruleType;
+	}	
+	
+	public String getRuleType() {
+		return ruleType;
 	}
+	
 	/**
 	 * @return Array com o objeto LineResult
 	 */
-	public ArrayList<LineResult> getArray() {
+	public List<LineResult> getArray() {
 		return array;
 	}
-	/**
-	 * @param array com o objeto LineResult
-	 */
-	public void setArray(ArrayList<LineResult> array) {
-		this.array = array;
-	}
+	
 	/**
 	 * @return nome da regra
 	 */
 	public String getRuleName() {
 		return ruleName;
 	}
-	/**
-	 * @param nome da regra
-	 */
-	public void setRuleName(String ruleName) {
-		this.ruleName = ruleName;
-	}	
-}
 
+	public void addResult(LineResult e) {
+		array.add(e);
+	}
+}

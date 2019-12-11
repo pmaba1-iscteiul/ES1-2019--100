@@ -1,15 +1,10 @@
 package rules;
 
 import java.util.ArrayList;
-import utils.DataBase;
-import java.util.Iterator;
+import java.util.List;
 
-import rules.Column;
-import rules.LineResult;
-import rules.Linha;
-import rules.LogicOperator;
-import rules.ObjectRuleVO;
-import rules.ObjectVO;
+import excelReader.FileRow;
+import utils.DataBase;
 
 /**
  * @author Francisco Raimundo
@@ -17,25 +12,15 @@ import rules.ObjectVO;
  */
 
 public class BuildRules {
-	
-	private ObjectRuleVO objectRuleVO;
-	private String auxFeature = "";
-	private double auxLimit = 0.0d;
-	private String auxOperator;
-	private ArrayList<ObjectVO> arrayObjectsVO;
-	private ArrayList<LogicOperator> arrayLogicOperators;
-	private ArrayList<Boolean> arrayIntermedio = new ArrayList<>();
-	private ArrayList<Boolean> arrayFinal = new ArrayList<>();
-	private ArrayList<Linha> arrayLinhas;
+
+	private Rule objectRuleVO;
 	private DataBase data;
-	
-	public BuildRules(ObjectRuleVO objectRuleVO, DataBase data) {
+
+	public BuildRules(Rule objectRuleVO, DataBase data) {
 		this.objectRuleVO=objectRuleVO;
 		this.data=data;
-		arrayLinhas = data.getExcel_file();
-		getAndSetBoolean();
-	 }
-	
+	}
+
 
 	/**
 	 * @param objectRuleVO
@@ -45,31 +30,24 @@ public class BuildRules {
 	 * as escolhas feitas pelo utilizador e é colocado num objeto final
 	 * para ser comparado com as regras existentes no ficheiro
 	 */
-	public void getAndSetBoolean() {
+	public void calculate() {
 
-		boolean boleano = false;
-		LineResult lineResult;
-		Column column;
-		
-		for(FileRow l : arrayLinhas) {
+		Column column = new Column(objectRuleVO.getRuleName(), objectRuleVO.getRuleType());
 
-			arrayObjectsVO = objectRuleVO.getListObjectsVO();
-			arrayLogicOperators = objectRuleVO.getListLogicOperators();
+		for(FileRow l : data.getExcel_file()) {
 
-			for (ObjectVO a : arrayObjectsVO) {
-				colocaNoArrayBooleans(l, a);
-			}
-			boleano = contasComOperadoresLogicos(arrayLogicOperators);
-			
-			lineResult.set(l.getMethodID(), boleano);
-			arrayLineResult.add(lineResult);
-			
-			arrayIntermedio.clear();
+			List<RulePart> arrayObjectsVO = objectRuleVO.getRulePart();
+			List<LogicOperator> arrayLogicOperators = objectRuleVO.getListLogicOperators();
+			List<Boolean> arrayIntermedio = new ArrayList<>();
+
+			for (RulePart a : arrayObjectsVO) 
+				arrayIntermedio.add(valueRulePart(l, a));
+
+			column.addResult(new LineResult(l.getMethodID(), contasComOperadoresLogicos(arrayLogicOperators, arrayIntermedio)));
+
 		}
-		column.setArray(arrayLineResult);
-		column.setRuleName(objectRuleVO.getRuleName());
+
 		data.addColumn(column);
-		arrayLineResult.clear();
 	}
 
 	/**
@@ -79,20 +57,16 @@ public class BuildRules {
 	 * método para calcular o boolean da regra, dependendo dos limites 
 	 * escolhidos pelo utilizador
 	 */
-	private boolean contasComOperadoresLogicos(ArrayList<LogicOperator> arrayLogicOperators) {
+	private boolean contasComOperadoresLogicos(List<LogicOperator> arrayLogicOperators, List<Boolean> arrayIntermedio ) {
+		//Calcula o valor lógico do if
 
-		boolean auxBooleanIntermedio=false;
-		boolean auxBoolean=false;
 
-		for(int a=1; a != arrayLogicOperators.size()+1; a=a+1) {
-			if(arrayLogicOperators.size()==0) {
-				auxBoolean=arrayIntermedio.get(a);
-			}
-			auxBooleanIntermedio=arrayIntermedio.get(a);
-			auxBoolean=calculaBoolean(auxBooleanIntermedio, arrayIntermedio.get(a), arrayLogicOperators.get(a-1));
-			auxBooleanIntermedio=auxBoolean;
-		}
-		return auxBoolean;
+		boolean intermedio = arrayIntermedio.get(0);
+
+		for(int i = 1; i < arrayIntermedio.size(); i++)
+			intermedio = calculaBoolean(intermedio, arrayIntermedio.get(i), arrayLogicOperators.get(i-1));
+
+		return intermedio; 
 	}
 
 	/**
@@ -104,6 +78,7 @@ public class BuildRules {
 	 * faz a conta, do boolean que resulta de 2 boolean com um operador lógico
 	 */
 	private boolean calculaBoolean(Boolean boolean1, Boolean boolean2, LogicOperator logicOperator) {
+		//Primeira Regra, Segunda Regra e Operador Logico
 		boolean auxBoolean=false;
 		if(logicOperator.equals(LogicOperator.AND)) {
 			if(boolean1.equals(true) && boolean2.equals(true)) {
@@ -131,25 +106,39 @@ public class BuildRules {
 	 * se dá true ou false .
 	 * No final coloca tudo num array para poder ser usado posteriormente
 	 */
-	public void colocaNoArrayBooleans(Linha linha, ObjectVO a) {
-
+	private boolean valueRulePart(FileRow linha, RulePart a) {
+		//Criar enumerado para operadores numericos
 		double limiteNaLinha = getLimiteDaLinha(linha, a);
-		
-			if (a.getOperator().equals("<")) {
-				if (limiteNaLinha < a.getLimit()) {
-					arrayIntermedio.add(true);
-				} else {
-					arrayIntermedio.add(false);
-				}
-			} else {
-				if(limiteNaLinha > a.getLimit()) {
-					arrayIntermedio.add(true);
-				} else {
-					arrayIntermedio.add(false);
-				}
+
+		if (a.getOperator().equals("<")) {
+			if (limiteNaLinha < a.getLimit()) { 
+				return true;
+			} else { 
+				return false;
 			}
+		}else {
+			if (a.getOperator().equals("<=")) {
+		
+				if(limiteNaLinha <= a.getLimit()) 
+					return true;
+				else 
+					return false;
+			} else {
+				if (a.getOperator().equals(">")) {
+					
+					if(limiteNaLinha > a.getLimit()) 
+						return true;
+					else 
+						return false;
+				} else {
+					
+						if(limiteNaLinha >= a.getLimit()) 
+							return true;
+						else 
+							return false;
+					}
 			
-	}
+		}
 
 	/**
 	 * @param linha
@@ -158,28 +147,22 @@ public class BuildRules {
 	 * 
 	 * Coloca no double o valor dependendo de qual feature foi escolhida
 	 */
-	private double getLimiteDaLinha(FileRow l, ObjectVO a) {
-		Double auxDouble = 0.0;
+	private double getLimiteDaLinha(FileRow l, RulePart a) {
 		try {
 			switch(a.getFeature()) {
 			case"LOC":
-				auxDouble = l.getLOC();
-				break;
+				return l.getLOC();
 			case"CYCLO":
-				auxDouble = l.getCYCLO();
-				break;
+				return l.getCYCLO();
 			case"ATFD":
-				auxDouble = l.getATFD();
-				break;
+				return l.getATFD();
 			case"LAA":
-				auxDouble = l.getLAA();
-				break;
-		}
-			
+				return l.getLAA();
+			}
 		} catch (Exception e) {
 			e.getMessage();
 		} 
-		return auxDouble;
+		return -1.0;
 	}
 
 }

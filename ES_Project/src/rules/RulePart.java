@@ -10,13 +10,23 @@ import java.io.Serializable;
  * o utilizador colocou .
  *
  */
-public class ObjectVO implements Serializable{
+public class RulePart implements Serializable{
+	// Regra, parametro que é suposto usar, operador e limite
 
 	private static final long serialVersionUID = 8929973800902868640L;
 	String metric;
 	double limit;
 	String operator;
 	
+	
+	
+	public RulePart(String metric, double limit, String operator) {
+		super();
+		this.metric = metric;
+		this.limit = limit;
+		this.operator = operator;
+	}
+
 	/**
 	 * @return feature
 	 */
@@ -60,4 +70,3 @@ public class ObjectVO implements Serializable{
 	}
 		
 }
-
