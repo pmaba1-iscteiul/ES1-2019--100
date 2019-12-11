@@ -50,7 +50,7 @@ public class MainWindow {
 	private DataBase data;
 	// create condition panel
 	private String condition_comparator = "";
-	//	int condition_limit = 0;
+	private boolean isSelectible = true;
 
 	/**
 	 * Initializes all class atr
@@ -265,8 +265,10 @@ public class MainWindow {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				if(!ruleNameTextField.getText().isBlank() && !data.getRulesName().contains(ruleNameTextField.getText()))
+				if(!ruleNameTextField.getText().isBlank() && !data.getRulesName().contains(ruleNameTextField.getText())) {
 					createRule(Defect.is_long, ruleNameTextField.getText());
+					ruleNameTextField.setText("");
+				}
 			}
 		});
 
@@ -275,8 +277,10 @@ public class MainWindow {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				if(!ruleNameTextField.getText().isBlank() && !data.getRulesName().contains(ruleNameTextField.getText()))
+				if(!ruleNameTextField.getText().isBlank() && !data.getRulesName().contains(ruleNameTextField.getText())) {
 					createRule(Defect.is_feature_envy, ruleNameTextField.getText());
+					ruleNameTextField.setText("");
+				}
 			}
 		});
 
@@ -390,15 +394,14 @@ public class MainWindow {
 		JPanel top = new JPanel(new GridLayout(1, 3));
 		top.add(new JLabel("Metric: " + metric + "   "));
 		top.add(centerLabel);
-//		JTextField limit_text = new JTextField();
 		NumberFormatter formatter = new NumberFormatter(NumberFormat.getInstance());
 		formatter.setValueClass(Integer.class);
-	    formatter.setMinimum(0);
-	    formatter.setMaximum(Integer.MAX_VALUE);
-	    formatter.setAllowsInvalid(false);
+		formatter.setMinimum(0);
+		formatter.setMaximum(Integer.MAX_VALUE);
+		formatter.setAllowsInvalid(false);
 		JFormattedTextField limit_text = new JFormattedTextField(formatter);
 		top.add(limit_text);
-		
+
 		JPanel center = new JPanel(new GridLayout(1,4));
 		JButton grater_button = new JButton(">");
 		JButton grater_equals_button = new JButton(">=");
@@ -467,6 +470,7 @@ public class MainWindow {
 				// TODO Auto-generated method stub
 				condition = new ArrayList<>();
 				buildScreen(panel, main_panel);
+				condition_comparator = "";
 			}
 		});
 
@@ -480,20 +484,18 @@ public class MainWindow {
 						int lim = Integer.parseInt(limit_text.getText());
 						if(lim > 0)
 							if(condition_comparator.equals("<") || condition_comparator.equals("<=") ||
-									condition_comparator.equals(">") || condition_comparator.equals(">="))
-								if (metrics.size() == 1 && parts.size() != 0 ) {
-									parts.add(new RulePart(metric, lim, condition_comparator));
-									condition_comparator = "";
+									condition_comparator.equals(">") || condition_comparator.equals(">=")) {
+								parts.add(new RulePart(metric, lim, condition_comparator));
+								condition_comparator = "";
+								if (metrics.size() == 1 && parts.size() == 1) {
+									new Rule(parts, (List<LogicOperator>)new ArrayList<LogicOperator>(), ruleName, defect);
 									buildScreen(metrics.pop(), main_panel);
 								}else if(metrics.size() == 1) {
-									parts.add(new RulePart(metric, lim, condition_comparator));
-									new Rule(parts, (List<LogicOperator>)new ArrayList<LogicOperator>(), ruleName, defect);
-									condition_comparator = "";
 									buildScreen(metrics.pop(), joinCondition(parts, ruleName, defect));
 								}else {
 									buildScreen(metrics.pop(), metrics.peek());
-									condition_comparator = "";
 								}
+							}
 					} catch (Exception e2) {
 						// TODO: handle exception
 					}
@@ -514,15 +516,37 @@ public class MainWindow {
 	 * @return
 	 */
 	private JPanel joinCondition(List<RulePart> parts, String ruleName, Defect defect) {
+		List<RulePart> partsFinalOrder = new ArrayList<RulePart>();
+		List<LogicOperator> logicOperators = new ArrayList<LogicOperator>();
 		JPanel panel = new JPanel(new BorderLayout());
 		JPanel right = new JPanel(new GridLayout(2,1));
 		JPanel bottom = new JPanel();
 
-		DefaultListModel<String> list = new DefaultListModel<String>();
-		JList metric_list = new JList(list);
-		JScrollPane scroll_list = new JScrollPane(metric_list);
+		JLabel topLabel = new JLabel("Condition: ");
 
+		panel.add(topLabel, BorderLayout.NORTH);
+
+		DefaultListModel<RulePart> list = new DefaultListModel<>();
+		JList<RulePart> metricList = new JList(list);
+		JScrollPane scroll_list = new JScrollPane(metricList);
+		list.addAll(parts);
 		panel.add(scroll_list, BorderLayout.WEST);
+
+		metricList.addListSelectionListener(new ListSelectionListener() {
+
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				if(!e.getValueIsAdjusting() && metricList.getSelectedValue() != null) 
+					if(isSelectible) {
+						RulePart r = metricList.getSelectedValue();
+						list.removeElement(r);
+						partsFinalOrder.add(r);
+						topLabel.setText(topLabel.getText() + " " + r.toString());
+						isSelectible = false;
+					}
+			}
+		});
+
 
 		JButton and_button = new JButton("AND");
 		JButton or_button = new JButton("OR");
@@ -535,6 +559,12 @@ public class MainWindow {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				if(!isSelectible) {
+					logicOperators.add(LogicOperator.AND);
+					topLabel.setText(topLabel.getText() + " AND" );
+					isSelectible = true;
+					frame.pack();
+				}
 
 			}
 		});
@@ -544,7 +574,12 @@ public class MainWindow {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-
+				if(!isSelectible) {
+					logicOperators.add(LogicOperator.OR);
+					topLabel.setText(topLabel.getText() + " OR" );
+					isSelectible = true;
+					frame.pack();
+				}
 			}
 		});
 
@@ -560,6 +595,7 @@ public class MainWindow {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				buildScreen(panel, main_panel);
+				isSelectible = true;
 			}
 		});
 
@@ -568,16 +604,20 @@ public class MainWindow {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-
+				if(partsFinalOrder.size() == parts.size() && logicOperators.size() == parts.size() - 1 ) {
+					data.addRule(new Rule(partsFinalOrder, logicOperators, ruleName, defect));
+					buildScreen(panel, main_panel);
+					isSelectible = true;
+				}
 			}
 		});
 
 		return panel;
 	}
 
-	//	public static void main(String[] args) {
-	//		// TODO Auto-generated method stub
-	//		new MainWindow();
-	//	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		new MainWindow(new DataBase("D:/Computer_Files/Downloads/Long-Method.xlsx"));
+	}
 
 }
