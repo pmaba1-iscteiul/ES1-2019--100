@@ -2,7 +2,6 @@ package quality;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import rules.LineResult;
 import rules.Column;
 import excelReader.FileRow;
@@ -25,8 +24,6 @@ public class RulesQuality {
 	private int ADII = 0;
 	private List<FileRow> rows;
 	private List<Column> columns;
-
-
 
 	/**
 	 * RulesQuality constructor  
@@ -75,10 +72,10 @@ public class RulesQuality {
 	}
 
 	// preciso de ver se é para comparar o resultado da regra com is_Long_Method ou com is_Feature_Envy
-	private void compare(){
-		ArrayList<LineResult> lineResults;
+	private void compare(String ruleName){
+		List<LineResult> lineResults;
 		for(Column col : columns) {
-			if (col.getRuleName().equals("is_Long_Method")) {
+			if (col.getRuleType().equals("is_Long_Method")) {
 				lineResults = col.getArray();
 				for(FileRow method : rows) {
 					for(LineResult line : lineResults) {
@@ -100,7 +97,7 @@ public class RulesQuality {
 						}
 					}
 				}
-			} else if (col.getRuleName().equals("is_Feature_Envy")) {
+			} else if (col.getRuleType().equals("is_Feature_Envy")) {
 				lineResults = col.getArray();
 				for(FileRow method : rows) {
 					for(LineResult line : lineResults) {
@@ -123,6 +120,7 @@ public class RulesQuality {
 					}
 				}
 			}
+			
 		}
 	}
 }	
