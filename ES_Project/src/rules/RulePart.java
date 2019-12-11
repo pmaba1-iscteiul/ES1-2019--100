@@ -68,6 +68,14 @@ public class RulePart implements Serializable{
 	public void setOperator(String operator) {
 		this.operator = operator;
 	}
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return metric + " " + operator + " " + limit;
+	}
+	
+	
 		
 }
 
