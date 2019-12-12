@@ -58,7 +58,7 @@ public class BuildRules {
 	 * método para calcular o boolean da regra, dependendo dos limites 
 	 * escolhidos pelo utilizador
 	 */
-	private boolean contasComOperadoresLogicos(List<LogicOperator> arrayLogicOperators, List<Boolean> arrayIntermedio ) {
+	public boolean contasComOperadoresLogicos(List<LogicOperator> arrayLogicOperators, List<Boolean> arrayIntermedio ) {
 		//Calcula o valor lógico do if
 
 
@@ -78,7 +78,7 @@ public class BuildRules {
 	 * 
 	 * faz a conta, do boolean que resulta de 2 boolean com um operador lógico
 	 */
-	private boolean calculaBoolean(Boolean boolean1, Boolean boolean2, LogicOperator logicOperator) {
+	public boolean calculaBoolean(Boolean boolean1, Boolean boolean2, LogicOperator logicOperator) {
 		//Primeira Regra, Segunda Regra e Operador Logico
 		boolean auxBoolean=false;
 		if(logicOperator.equals(LogicOperator.AND)) {
@@ -107,7 +107,7 @@ public class BuildRules {
 	 * se dá true ou false .
 	 * No final coloca tudo num array para poder ser usado posteriormente
 	 */
-	private boolean valueRulePart(FileRow linha, RulePart a) {
+	public boolean valueRulePart(FileRow linha, RulePart a) {
 		//Criar enumerado para operadores numericos
 		double limiteNaLinha = getLimiteDaLinha(linha, a);
 
@@ -149,7 +149,7 @@ public class BuildRules {
 	 * 
 	 * Coloca no double o valor dependendo de qual feature foi escolhida
 	 */
-	private double getLimiteDaLinha(FileRow l, RulePart a) {
+	public double getLimiteDaLinha(FileRow l, RulePart a) {
 		try {
 			switch(a.getFeature()) {
 			case"LOC":
