@@ -24,6 +24,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.text.NumberFormatter;
 
+import graph.GraphApp;
 import rules.LogicOperator;
 import rules.Rule;
 import rules.RulePart;
@@ -44,6 +45,7 @@ public class MainWindow {
 	private JPanel rules_alteration_panel;
 	private JPanel rule_creation_defect_panel;
 	private JPanel ruleAlteration;
+	private JPanel graphicChooser;
 	private List<String> condition = new ArrayList<>();
 	private Stack<JPanel> metrics = new Stack<>();
 	private DataBase data;
@@ -67,11 +69,12 @@ public class MainWindow {
 		this.rules_alteration_panel = new JPanel();
 		this.rule_creation_defect_panel = new JPanel(new BorderLayout());
 		this.ruleAlteration = new JPanel();
+		this.graphicChooser = new JPanel(new BorderLayout());
 		this.addContentMain();
 		this.addContentVisualization();
 		this.addContentRulesAlteration();
 		this.addContentRuleDefect();
-//		this.addContentRuleChanging();
+		this.addContentChooseGraphic();
 		this.frame.add(main_panel);
 		this.open();
 	}
@@ -160,7 +163,7 @@ public class MainWindow {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				System.out.println("Graphics Button");
+				buildScreen(visualization_panel, graphicChooser);
 			}
 		});
 
@@ -173,6 +176,56 @@ public class MainWindow {
 			}
 		});	
 	}
+	
+	private void addContentChooseGraphic() {
+		JPanel buttonsPanel = new JPanel(new GridLayout(2, 2));
+		
+		JButton rules = new JButton("Rules");
+		rules.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				new GraphApp(data).createHistogramRules();
+				buildScreen(graphicChooser, main_panel);
+			}
+		});
+		buttonsPanel.add(rules);
+		
+		JButton tools = new JButton("Tools");
+		tools.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				new Thread(new Runnable() {
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						new GraphApp(data).createHistogramTools();
+					}
+				}).start();
+				buildScreen(graphicChooser, main_panel);
+			}
+		});
+		buttonsPanel.add(tools);
+		
+		JButton back = new JButton("Back");
+		back.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				buildScreen(graphicChooser, main_panel);
+			}
+		});
+		buttonsPanel.add(back);
+		
+		graphicChooser.add(new JLabel("What Graphic?"), BorderLayout.NORTH);
+		graphicChooser.add(buttonsPanel, BorderLayout.SOUTH);
+	}
+	
 	/**
 	 * Creates the windows responsible by allowing the user visualize the excel file
 	 */
