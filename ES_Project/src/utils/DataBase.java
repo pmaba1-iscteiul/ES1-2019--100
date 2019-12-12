@@ -49,7 +49,6 @@ public class DataBase {
 				it.remove();
 		}
 		rules.add(r);
-		System.out.println(r.toString());
 	}
 	
 	public List<Rule> getRules() {

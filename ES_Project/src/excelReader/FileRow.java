@@ -216,7 +216,7 @@ public class FileRow {
 	 * 
 	 */
 	
-	public String getRow() {
+	public String toString() {
 		String row = MethodID + ";" + Package + ";" + ClassName + ";" + Method + ";" + LOC + ";" + CYCLO + ";" + ATFD + ";" + LAA + ";" + is_Long_Method + ";" + PMD + ";" + iPlasma + ";" + is_Feature_Envy;  
 		return row;
 	}

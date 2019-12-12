@@ -19,11 +19,16 @@ import userinterface.Defect;
 import utils.DataBase;
 
 public class GraphApp_Test {
-
 	
 	DataBase db = new DataBase("C:/Users/alexa/Documents/METI/1st semester/ESI/projeto/Long-Method.xlsx");
 	GraphApp ga = new GraphApp(db);
-		
+	List<LogicOperator> lo = new ArrayList<LogicOperator>();
+	List<RulePart> l1 = new ArrayList<RulePart>();
+	List<RulePart> l2 = new ArrayList<RulePart>();
+	List<FileRow> rows = db.getExcel_file();
+
+
+
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}
@@ -34,10 +39,8 @@ public class GraphApp_Test {
 
 	@Test
 	public void testCreateHistogramRules() {
-		List<LogicOperator> lo = new ArrayList<LogicOperator>();
 		lo.add(LogicOperator.AND);	
 		
-		List<RulePart> l1 = new ArrayList<RulePart>();
 		l1.add(new RulePart("LOC", 80, ">"));
 		l1.add(new RulePart("CYCLO", 10, ">"));
 		Rule obj = new Rule(l1, lo, "long method", Defect.is_long) ;
@@ -87,10 +90,8 @@ public class GraphApp_Test {
 
 	@Test
 	public void testCompareRules() {
-		List<LogicOperator> lo = new ArrayList<LogicOperator>();
 		lo.add(LogicOperator.AND);	
 		
-		List<RulePart> l1 = new ArrayList<RulePart>();
 		l1.add(new RulePart("LOC", 80, ">"));
 		l1.add(new RulePart("CYCLO", 10, ">"));
 		Rule obj = new Rule(l1, lo, "long method", Defect.is_long) ;
@@ -102,7 +103,6 @@ public class GraphApp_Test {
 		assertEquals(280, (int) ga.compareRules("long method").get(2));
 		assertEquals(3, (int) ga.compareRules("long method").get(3));
 		
-		List<RulePart> l2 = new ArrayList<RulePart>();
 		l2.add(new RulePart("ATFD", 4, ">"));
 		l2.add(new RulePart("LAA", 0.42, "<"));
 		Rule object = new Rule(l2, lo, "feature envy", Defect.is_feature_envy) ;
@@ -113,17 +113,7 @@ public class GraphApp_Test {
 		assertEquals(0, (int) ga.compareRules("feature envy").get(1));
 		assertEquals(306, (int) ga.compareRules("feature envy").get(2));
 		assertEquals(2, (int) ga.compareRules("feature envy").get(3));
-		
-//		Rule w = new Rule(l2, lo, "something", null) ;
-//		BuildRules wr = new BuildRules(w, db);
-//		wr.calculate();
-//		
-//		assertEquals(0, (int) ga.compareRules("something").get(0));
-//		assertEquals(0, (int) ga.compareRules("something").get(1));
-//		assertEquals(0, (int) ga.compareRules("something").get(2));
-//		assertEquals(0, (int) ga.compareRules("something").get(3));
-		
-		List<FileRow> rows = db.getExcel_file();
+				
 		rows.add(0, new FileRow(500, "", "", "", 0, 0, 0, 0, false, false, false, false));
 		
 		assertEquals(0, (int) ga.compareRules("feature envy").get(0));
