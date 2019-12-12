@@ -1,8 +1,6 @@
 package graph;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,11 +89,11 @@ public class GraphApp_Test {
 	}
 
 	@Test
-	public void testAux_compare() {
-		assertEquals(0, (int)ga.aux_compare(true, true));
-		assertEquals(1, (int)ga.aux_compare(false, true));
-		assertEquals(2, (int)ga.aux_compare(false, false));
-		assertEquals(3, (int)ga.aux_compare(true, false));
+	public void testAuxCompare() {
+		assertEquals(0, (int)ga.auxCompare(true, true));
+		assertEquals(1, (int)ga.auxCompare(false, true));
+		assertEquals(2, (int)ga.auxCompare(false, false));
+		assertEquals(3, (int)ga.auxCompare(true, false));
 	}
 
 }
