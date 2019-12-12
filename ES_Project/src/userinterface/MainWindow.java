@@ -178,16 +178,6 @@ public class MainWindow {
 	 */
 	private void createTableView() {
 		JPanel table_panel = new JPanel();
-		table_panel.setLayout(new BorderLayout());
-//		JTable table = new JTable();
-//		JLabel table = new JLabel();
-//		JTextField table = new JTextField(200);
-		JTextArea table = new JTextArea(50,1);
-		JScrollPane table_scroll = new JScrollPane(table);
-		table_panel.add(table_scroll, BorderLayout.NORTH);
-		for(String s: data.getResults()) 
-			table.append(s + "\n");
-		
 		
 		JButton back_button = new JButton("Back");
 		back_button.addActionListener(new ActionListener() {
@@ -198,10 +188,20 @@ public class MainWindow {
 				buildScreen(table_panel, main_panel);
 			}
 		});
+		
+		
+		table_panel.setLayout(new BorderLayout());
+//		JTable table = new JTable();
+//		JLabel table = new JLabel();
+//		JTextField table = new JTextField(200);
+		JTextArea table = new JTextArea(20,1);
+		JScrollPane table_scroll = new JScrollPane(table);
+		table_panel.add(table_scroll, BorderLayout.NORTH);
+		for(String s: data.getResults()) 
+			table.append(s + "\n");
+		
 		table_panel.add(back_button, BorderLayout.SOUTH);
-
 		buildScreen(visualization_panel, table_panel);
-
 	}
 
 	/**
