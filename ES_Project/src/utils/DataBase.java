@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import rules.BuildRules;
 import rules.Column;
 import rules.Rule;
 import excelReader.ExcelReader;
@@ -52,6 +53,7 @@ public class DataBase {
 				it.remove();
 		}
 		rules.add(r);
+		new BuildRules(r, this).calculate();;
 		System.out.println(r.toString());
 	}
 	
