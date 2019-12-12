@@ -18,6 +18,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -178,11 +179,16 @@ public class MainWindow {
 	private void createTableView() {
 		JPanel table_panel = new JPanel();
 		table_panel.setLayout(new BorderLayout());
-		JTable table = new JTable();
+//		JTable table = new JTable();
+//		JLabel table = new JLabel();
+//		JTextField table = new JTextField(200);
+		JTextArea table = new JTextArea(50,1);
 		JScrollPane table_scroll = new JScrollPane(table);
-		table.setFillsViewportHeight(true);
 		table_panel.add(table_scroll, BorderLayout.NORTH);
-
+		for(String s: data.getResults()) 
+			table.append(s + "\n");
+		
+		
 		JButton back_button = new JButton("Back");
 		back_button.addActionListener(new ActionListener() {
 
@@ -244,6 +250,7 @@ public class MainWindow {
 		});
 
 	}
+	
 	/**
 	 * Create a panel that allows changing the rule already Created
 	 */
