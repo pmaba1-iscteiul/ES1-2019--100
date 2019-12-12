@@ -53,20 +53,24 @@ public class DataBase_Test {
 		l1.add(new RulePart("LOC", 80, ">"));
 		Rule obj = new Rule(l1, lo, "long method", Defect.is_long) ;
 		new BuildRules(obj, db).calculate();
+		db.addRule(obj);
 		
-		l1.add(new RulePart("LOC", 80, ">"));
-		l1.add(new RulePart("CYCLO", 10, ">"));;
+		assertEquals(1, db.getRules().get(0).getRulePart().size());
+		
+		l1.add(new RulePart("CYCLO", 10, ">"));
 		lo.add(LogicOperator.AND);
 		Rule x = new Rule(l1, lo, "long method", Defect.is_long) ;
-		System.out.println("vou calcular");
-		new BuildRules(x, db).calculate();;
-				
+		new BuildRules(x, db).calculate();
+		db.addRule(x);
+		
 		Rule y = new Rule(l1, lo, "long method 2", Defect.is_long) ;
 		new BuildRules(y, db).calculate();
+		db.addRule(y);
 		
 		assertEquals("long method",db.getColumns().get(0).getRuleName());
 		assertEquals("long method 2",db.getColumns().get(1).getRuleName());
 		assertEquals(2, db.getRules().get(0).getRulePart().size());
+		assertEquals(2, db.getRules().get(1).getRulePart().size());
 	}
 
 	@Test
@@ -75,7 +79,7 @@ public class DataBase_Test {
 		Rule obj = new Rule(l1, lo, "long method", Defect.is_long) ;
 		db.addRule(obj);
 		
-		l1.add(new RulePart("CYCLO", 10, ">"));;
+		l1.add(new RulePart("CYCLO", 10, ">"));
 		lo.add(LogicOperator.AND);
 		Rule x = new Rule(l1, lo, "long method", Defect.is_long) ;
 		db.addRule(x);
