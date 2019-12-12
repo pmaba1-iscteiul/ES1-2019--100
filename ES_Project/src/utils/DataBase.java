@@ -29,7 +29,14 @@ public class DataBase {
 		return columns;
 	}
 
-	public void addColumn (Column column) {
+	public void addColumn(Column column) {
+		Iterator<Column> it = columns.iterator();
+		
+		while(it.hasNext()) {
+			Column col = it.next();
+			if(col.getRuleName().equals(column.getRuleName()))
+					it.remove();
+		}
 		columns.add(column);
 	}
 	
