@@ -53,7 +53,7 @@ public class GraphApp extends ApplicationFrame {
 		this.setVisible( true ); 
 		this.setResizable(false);
 	}
-	
+
 	/**
 	 * Creates the interface of Histogram for Tools 
 	 */
@@ -73,17 +73,16 @@ public class GraphApp extends ApplicationFrame {
 	 * @return CategoryDataset
 	 */
 	private CategoryDataset createDatasetTools( ) {
-		List<String> tools = List.of("PMD", "iPlasma");
 		List<String> indicators = List.of("DCI", "DII", "ADCI", "ADII");
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset( );  
 		List<Integer> results; 
-		
-		for (int i = 0; i < tools.size(); i++) {
-			results = compareTools(tools.get(i));
-			for (int j = 0; j < indicators.size(); j++) {
-				dataset.addValue(results.get(j) , tools.get(i) , indicators.get(j));
-			}
-		}    
+
+		results = compareTools("PMD");
+		for (int j = 0; j < indicators.size(); j++) 
+			dataset.addValue(results.get(j) , "PMD" , indicators.get(j));
+		results = compareTools("iPlasma");
+		for (int j = 0; j < indicators.size(); j++) 
+			dataset.addValue(results.get(j) , "iPlasma" , indicators.get(j));
 		return dataset; 
 	}
 
@@ -96,11 +95,11 @@ public class GraphApp extends ApplicationFrame {
 		List<String> indicators = List.of("DCI", "DII", "ADCI", "ADII");       
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset( ); 
 		List<Integer> results; 
-		
+
 		List<Column> columns = db.getColumns();
 		for(Column col : columns)
 			rules.add(col.getRuleName());
-		
+
 		for (int i = 0; i < rules.size(); i++) {
 			results = compareRules(rules.get(i));
 			for (int j = 0; j < indicators.size(); j++) {
@@ -117,19 +116,19 @@ public class GraphApp extends ApplicationFrame {
 	 * @param toolName - tool to be evaluated (PMD or iPlasma)
 	 * @return list of results for the tool's quality 
 	 */
-	public List<Integer> compareTools(String toolName){
+	private List<Integer> compareTools(String toolName){
 		List<FileRow> rows = db.getExcel_file();
 		List<Integer> results = Arrays.asList(0,0,0,0);
 		int aux = 0;
 		boolean type = false;
 		boolean result = false;
-		
+
 		for(FileRow method : rows) {
 			if(toolName.equals("PMD"))
 				result = method.isPMD();
-			else if (toolName.equals("iPlasma"))
+			else
 				result = method.isiPlasma();
-			else break;
+
 			type = method.isIs_Long_Method();
 			aux = auxCompare(type, result);
 			int x = results.get(aux) + 1;
@@ -146,28 +145,26 @@ public class GraphApp extends ApplicationFrame {
 	 * @param ruleName - rule to be evaluated (name of existing rule in data base)
 	 * @return list of results for the rule's quality 
 	 */
-	public List<Integer> compareRules(String ruleName){
+	private List<Integer> compareRules(String ruleName){
 		List<Column> columns = db.getColumns();
 		List<FileRow> rows = db.getExcel_file();
 		List<Integer> results = Arrays.asList(0,0,0,0);
 		int aux = 0;
 		boolean type = false;
 		boolean result = false;
-		
+
 		for(Column col : columns) {
 			if (col.getRuleName().equals(ruleName)) {
 				List<LineResult> lineResults = col.getArray();
 				for (int i = 0; i < rows.size(); i++) {
-					if(rows.get(i).getMethodID() == lineResults.get(i).getMethodID()) {
-						result = lineResults.get(i).isResult();
-						if (col.getRuleType().equals(Defect.is_long)) 
-							type = rows.get(i).isIs_Long_Method();
-						else 
-							type = rows.get(i).isIs_Feature_Envy();
-						aux = auxCompare(type, result);
-						results.set(aux, results.get(aux) + 1);
-						aux = 0;
-					} else break;
+					result = lineResults.get(i).isResult();
+					if (col.getRuleType().equals(Defect.is_long)) 
+						type = rows.get(i).isIs_Long_Method();
+					else 
+						type = rows.get(i).isIs_Feature_Envy();
+					aux = auxCompare(type, result);
+					results.set(aux, results.get(aux) + 1);
+					aux = 0;
 				}
 			}
 		}
@@ -182,7 +179,7 @@ public class GraphApp extends ApplicationFrame {
 	 * @param aval - rule calculated result of is_Long_Method/is_Feature_Envy for the given method
 	 * @return integer corresponding to position of quality indicator on the results list
 	 */
-	public Integer auxCompare(boolean type, boolean aval){
+	private Integer auxCompare(boolean type, boolean aval){
 		if(type == true) {
 			if(aval == true) 
 				return 0;
@@ -192,7 +189,7 @@ public class GraphApp extends ApplicationFrame {
 			if(aval == false) 
 				return 2;
 			else 
-				return 1;	
+				return 1;
 		}
 	}
 }
