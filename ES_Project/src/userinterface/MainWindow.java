@@ -25,10 +25,11 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.text.NumberFormatter;
 
 import graph.GraphApp;
-import rules.LogicOperator;
 import rules.Rule;
 import rules.RulePart;
 import utils.DataBase;
+import utils.Defect;
+import utils.LogicOperator;
 /**
  * Main visualization window, responsible for all the mechanics in the system and all user interface.
  * 
@@ -100,13 +101,11 @@ public class MainWindow {
 	 * Creates main windown. Responsible for the menu creation.
 	 */
 	private void addContentMain() {
-		main_panel = new JPanel(new GridLayout(2, 2));
+		main_panel = new JPanel(new GridLayout(2, 1));
 		JButton rules_button = new JButton("Add/Change Rules");
 		JButton visualization_button = new JButton("Visualize Data");
-		JButton tools_quality_button = new JButton("Tools Quality");
 		main_panel.add(rules_button);
 		main_panel.add(visualization_button);
-		main_panel.add(tools_quality_button);
 
 		rules_button.addActionListener(new ActionListener() {
 
@@ -123,15 +122,6 @@ public class MainWindow {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				buildScreen(main_panel, visualization_panel);
-			}
-		});
-
-		tools_quality_button.addActionListener(new  ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				System.out.println("Tools quality");
 			}
 		});
 
@@ -646,6 +636,13 @@ public class MainWindow {
 						partsFinalOrder.add(r);
 						topLabel.setText(topLabel.getText() + " " + r.toString());
 						isSelectible = false;
+						if(list.isEmpty()) {
+							if(partsFinalOrder.size() == parts.size() && logicOperators.size() == parts.size() - 1 ) {
+								data.addRule(new Rule(partsFinalOrder, logicOperators, ruleName, defect));
+								buildScreen(panel, main_panel);
+								isSelectible = true;
+							}
+						}
 					}
 			}
 		});
@@ -687,9 +684,7 @@ public class MainWindow {
 		});
 
 		JButton cancel_button = new JButton("Cancel");
-		JButton nextButton = new JButton("Next");
 		bottom.add(cancel_button, BorderLayout.WEST);
-		bottom.add(nextButton, BorderLayout.EAST);
 		panel.add(bottom, BorderLayout.SOUTH);
 
 		cancel_button.addActionListener(new ActionListener() {
@@ -702,25 +697,12 @@ public class MainWindow {
 			}
 		});
 
-		nextButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				if(partsFinalOrder.size() == parts.size() && logicOperators.size() == parts.size() - 1 ) {
-					data.addRule(new Rule(partsFinalOrder, logicOperators, ruleName, defect));
-					buildScreen(panel, main_panel);
-					isSelectible = true;
-				}
-			}
-		});
-
 		return panel;
 	}
 
-//	public static void main(String[] args) {
-//		// TODO Auto-generated method stub
-//		new MainWindow(new DataBase("D:/Computer_Files/Downloads/Long-Method.xlsx")).init();
-//	}
+	//	public static void main(String[] args) {
+	//		// TODO Auto-generated method stub
+	//		new MainWindow(new DataBase("D:/Computer_Files/Downloads/Long-Method.xlsx")).init();
+	//	}
 
 }

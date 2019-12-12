@@ -10,15 +10,15 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import rules.BuildRules;
-import rules.LogicOperator;
 import rules.Rule;
 import rules.RulePart;
-import userinterface.Defect;
 import utils.DataBase;
+import utils.Defect;
+import utils.LogicOperator;
 
 public class GraphApp_Test {
 	
-	DataBase db = new DataBase("C:/Users/alexa/Documents/METI/1st semester/ESI/projeto/Long-Method.xlsx");
+	DataBase db = new DataBase("D:/Computer_Files/Downloads/Long-Method.xlsx");
 	GraphApp ga = new GraphApp(db);
 	List<LogicOperator> lo = new ArrayList<LogicOperator>();
 	List<RulePart> l1 = new ArrayList<RulePart>();

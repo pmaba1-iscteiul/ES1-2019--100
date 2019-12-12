@@ -1,4 +1,4 @@
-package rules;
+package utils;
 
 /**
  * @author Francisco Raimundo

@@ -5,6 +5,7 @@ import java.util.List;
 
 import excelReader.FileRow;
 import utils.DataBase;
+import utils.LogicOperator;
 
 /**
  * @author Francisco Raimundo

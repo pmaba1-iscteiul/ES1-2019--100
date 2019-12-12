@@ -51,7 +51,6 @@ public class DataBase {
 		}
 		rules.add(r);
 		new BuildRules(r, this).calculate();;
-		System.out.println(r.toString());
 	}
 	
 	public List<Rule> getRules() {

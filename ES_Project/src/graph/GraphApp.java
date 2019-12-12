@@ -17,8 +17,8 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import excelReader.FileRow;
 import rules.Column;
 import rules.LineResult;
-import userinterface.Defect;
-import utils.DataBase; 
+import utils.DataBase;
+import utils.Defect; 
 
 
 /**

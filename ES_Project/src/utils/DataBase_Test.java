@@ -12,10 +12,8 @@ import org.junit.Test;
 import excelReader.ExcelReader;
 import excelReader.FileRow;
 import rules.BuildRules;
-import rules.LogicOperator;
 import rules.Rule;
 import rules.RulePart;
-import userinterface.Defect;
 
 public class DataBase_Test {
 

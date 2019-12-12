@@ -4,7 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import userinterface.Defect;
+import utils.Defect;
+import utils.LogicOperator;
 
 /**
  * @author Francisco Raimundo
