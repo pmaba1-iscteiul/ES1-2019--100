@@ -86,7 +86,7 @@ public class FirstScreen {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				if(!file_path.getText().isEmpty()) {
-					new MainWindow(new DataBase(file_path.getText()));
+					new MainWindow(new DataBase(file_path.getText())).init();
 					frame.dispose();
 				}
 			}

@@ -56,20 +56,23 @@ public class MainWindow {
 	 */
 	public MainWindow(DataBase data) {
 		super();
+		this.data = data;
+	}
+	
+	public void init() {
 		this.frame = new JFrame("Software Engineering App");
 		this.main_panel = new JPanel();
 		this.visualization_panel = new JPanel();
 		this.rules_alteration_panel = new JPanel();
 		this.rule_creation_defect_panel = new JPanel(new BorderLayout());
+		this.ruleAlteration = new JPanel();
 		this.addContentMain();
 		this.addContentVisualization();
 		this.addContentRulesAlteration();
 		this.addContentRuleDefect();
-		//		this.addContentRuleChanging();
+//		this.addContentRuleChanging();
 		this.frame.add(main_panel);
 		this.open();
-
-		this.data = data;
 	}
 	/**
 	 * Changes between two JPanels
@@ -226,7 +229,8 @@ public class MainWindow {
 				// TODO Auto-generated method stub
 				System.out.println("Change Rules");
 				//				buildScreen(rules_alteration_panel, ruleAlteration);
-				addContentRuleChanging();
+				addContentRuleChanging();;
+				buildScreen(rules_alteration_panel,ruleAlteration);
 			}
 		});
 
@@ -244,13 +248,14 @@ public class MainWindow {
 	 * Create a panel that allows changing the rule already Created
 	 */
 	private void addContentRuleChanging() {
-		JPanel panel = new JPanel(new BorderLayout());
-		panel.add(new JLabel("What's the rule you want to change?"), BorderLayout.NORTH);
+		ruleAlteration = new JPanel(new BorderLayout());
+		ruleAlteration.add(new JLabel("What's the rule you want to change?"), BorderLayout.NORTH);
 		DefaultListModel<Rule> list = new DefaultListModel<>();
 		JList rule_list = new JList(list);
 		JScrollPane scroll_list = new JScrollPane(rule_list);
+		list.clear();
 		list.addAll(data.getRules());
-		panel.add(scroll_list,BorderLayout.EAST);
+		ruleAlteration.add(scroll_list,BorderLayout.EAST);
 
 		rule_list.addListSelectionListener(new ListSelectionListener() {
 
@@ -260,14 +265,13 @@ public class MainWindow {
 				if(!e.getValueIsAdjusting())
 					if(rule_list.getSelectedValue() != null) {
 						Rule r = (Rule) rule_list.getSelectedValue();
-						createRule(r.getDefect(), r.getRuleName());
-						buildScreen(rules_alteration_panel, ruleAlteration);
+						createRule(r.getDefect(), r.getRuleName(), false);
 					}
 			}
 		});
 
 		JButton backButton = new JButton("Back");
-		panel.add(backButton, BorderLayout.SOUTH);
+		ruleAlteration.add(backButton, BorderLayout.SOUTH);
 		backButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -276,8 +280,6 @@ public class MainWindow {
 				buildScreen(ruleAlteration, main_panel);
 			}
 		});
-		ruleAlteration = panel;
-		buildScreen(rules_alteration_panel, panel);
 	}
 
 	/**
@@ -309,7 +311,7 @@ public class MainWindow {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				if(!ruleNameTextField.getText().isBlank() && !data.getRulesName().contains(ruleNameTextField.getText())) {
-					createRule(Defect.is_long, ruleNameTextField.getText());
+					createRule(Defect.is_long, ruleNameTextField.getText(), true);
 					ruleNameTextField.setText("");
 				}
 			}
@@ -321,7 +323,7 @@ public class MainWindow {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				if(!ruleNameTextField.getText().isBlank() && !data.getRulesName().contains(ruleNameTextField.getText())) {
-					createRule(Defect.is_feature_envy, ruleNameTextField.getText());
+					createRule(Defect.is_feature_envy, ruleNameTextField.getText(), true);
 					ruleNameTextField.setText("");
 				}
 			}
@@ -661,7 +663,7 @@ public class MainWindow {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		new MainWindow(new DataBase("D:/Computer_Files/Downloads/Long-Method.xlsx"));
+		new MainWindow(new DataBase("D:/Computer_Files/Downloads/Long-Method.xlsx")).init();
 	}
 
 }
