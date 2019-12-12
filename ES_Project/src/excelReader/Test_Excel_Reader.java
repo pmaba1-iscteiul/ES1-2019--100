@@ -44,7 +44,7 @@ class Test_Excel_Reader {
 	@Test
 	void checkGetRow() {
 		assertEquals("211;org.lnicholls.galleon.apps.desktop;Desktop.DesktopScreen;update();137.0;7.0;0.0;0.0;false;false;false;false",
-				aux.getRow());
+				aux.toString());
 	}
 	
 	@Rule
