@@ -61,7 +61,7 @@ public class MainWindow {
 		super();
 		this.data = data;
 	}
-	
+
 	public void init() {
 		this.frame = new JFrame("Software Engineering App");
 		this.main_panel = new JPanel();
@@ -176,44 +176,41 @@ public class MainWindow {
 			}
 		});	
 	}
-	
+
 	private void addContentChooseGraphic() {
 		JPanel buttonsPanel = new JPanel(new GridLayout(2, 2));
-		
+
 		JButton rules = new JButton("Rules");
 		rules.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				new GraphApp(data).createHistogramRules();
-				buildScreen(graphicChooser, main_panel);
+				GraphApp g = new GraphApp(data);
+				g.createHistogramRules();
+				if(g.open())
+					buildScreen(graphicChooser, main_panel);
 			}
 		});
 		buttonsPanel.add(rules);
-		
+
 		JButton tools = new JButton("Tools");
 		tools.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				new Thread(new Runnable() {
-					
-					@Override
-					public void run() {
-						// TODO Auto-generated method stub
-						new GraphApp(data).createHistogramTools();
-					}
-				}).start();
-				buildScreen(graphicChooser, main_panel);
+				GraphApp g = new GraphApp(data);
+				g.createHistogramTools();
+				if(g.open())
+					buildScreen(graphicChooser, main_panel);
 			}
 		});
 		buttonsPanel.add(tools);
-		
+
 		JButton back = new JButton("Back");
 		back.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
@@ -221,17 +218,17 @@ public class MainWindow {
 			}
 		});
 		buttonsPanel.add(back);
-		
+
 		graphicChooser.add(new JLabel("What Graphic?"), BorderLayout.NORTH);
 		graphicChooser.add(buttonsPanel, BorderLayout.SOUTH);
 	}
-	
+
 	/**
 	 * Creates the windows responsible by allowing the user visualize the excel file
 	 */
 	private void createTableView() {
 		JPanel table_panel = new JPanel();
-		
+
 		JButton back_button = new JButton("Back");
 		back_button.addActionListener(new ActionListener() {
 
@@ -241,18 +238,18 @@ public class MainWindow {
 				buildScreen(table_panel, main_panel);
 			}
 		});
-		
-		
+
+
 		table_panel.setLayout(new BorderLayout());
-//		JTable table = new JTable();
-//		JLabel table = new JLabel();
-//		JTextField table = new JTextField(200);
+		//		JTable table = new JTable();
+		//		JLabel table = new JLabel();
+		//		JTextField table = new JTextField(200);
 		JTextArea table = new JTextArea(20,1);
 		JScrollPane table_scroll = new JScrollPane(table);
 		table_panel.add(table_scroll, BorderLayout.NORTH);
 		for(String s: data.getResults()) 
 			table.append(s + "\n");
-		
+
 		table_panel.add(back_button, BorderLayout.SOUTH);
 		buildScreen(visualization_panel, table_panel);
 	}
@@ -303,7 +300,7 @@ public class MainWindow {
 		});
 
 	}
-	
+
 	/**
 	 * Create a panel that allows changing the rule already Created
 	 */
@@ -721,9 +718,9 @@ public class MainWindow {
 		return panel;
 	}
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		new MainWindow(new DataBase("D:/Computer_Files/Downloads/Long-Method.xlsx")).init();
-	}
+//	public static void main(String[] args) {
+//		// TODO Auto-generated method stub
+//		new MainWindow(new DataBase("D:/Computer_Files/Downloads/Long-Method.xlsx")).init();
+//	}
 
 }

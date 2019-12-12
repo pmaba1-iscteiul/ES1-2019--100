@@ -49,13 +49,13 @@ public class GraphApp_Test {
 		rules.calculate();
 		
 		ga.createHistogramRules();
-		assertEquals(1, ga.getComponentCount());
+		assertEquals(true, ga.open());
 	}
 
 	@Test
 	public void testCreateHistogramTools() {
 		ga.createHistogramTools();
-		assertEquals(1, ga.getComponentCount());	
+		assertEquals(true, ga.open());	
 	}
 	
 }

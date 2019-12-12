@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.swing.JFrame;
+
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -25,10 +27,10 @@ import utils.DataBase;
  * Class that allows view the system analysis results 
  * of the quality of iPlasma and PMD tools through a histogram.
  */
-public class GraphApp extends ApplicationFrame {
+public class GraphApp{
 
-	private static final long serialVersionUID = -7740341565079488734L;
 	private DataBase db;
+	private JFrame frame;
 
 	/**
 	 * GraphApp constructor.
@@ -36,8 +38,15 @@ public class GraphApp extends ApplicationFrame {
 	 * @param db - Data Base to test tools' and rules' quality and create corresponding histograms
 	 */
 	public GraphApp(DataBase db ) {
-		super( "Histogram" );
 		this.db = db;
+		frame = new JFrame("Histogram");
+	}
+	
+	public Boolean open() {
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.setVisible(true);
+		frame.pack();
+		return true;
 	}
 
 	/**
@@ -47,11 +56,8 @@ public class GraphApp extends ApplicationFrame {
 		JFreeChart barChart = ChartFactory.createBarChart("Histogram Rules", "", "",           
 				createDatasetRules(), PlotOrientation.VERTICAL, true, true, false);
 		ChartPanel chartPanel = new ChartPanel( barChart );        
-		chartPanel.setPreferredSize(new java.awt.Dimension( 560 , 367 ) );        
-		setContentPane( chartPanel ); 
-		this.pack( );        
-		this.setVisible( true ); 
-		this.setResizable(false);
+		chartPanel.setPreferredSize(new java.awt.Dimension( 560 , 367 ) );
+		frame.add(chartPanel);
 	}
 
 	/**
@@ -61,11 +67,8 @@ public class GraphApp extends ApplicationFrame {
 		JFreeChart barChart = ChartFactory.createBarChart("Histogram Tools", "", "",            
 				createDatasetTools(), PlotOrientation.VERTICAL, true, true, false);
 		ChartPanel chartPanel = new ChartPanel( barChart );        
-		chartPanel.setPreferredSize(new java.awt.Dimension( 560 , 367 ) );        
-		setContentPane( chartPanel ); 
-		this.pack( );        
-		this.setVisible( true ); 
-		this.setResizable(false);
+		chartPanel.setPreferredSize(new java.awt.Dimension( 560 , 367 ) );
+		frame.add(chartPanel);
 	}
 
 	/**
