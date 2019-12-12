@@ -15,6 +15,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import excelReader.FileRow;
 import rules.Column;
 import rules.LineResult;
+import userinterface.Defect;
 import utils.DataBase; 
 
 
@@ -159,9 +160,9 @@ public class GraphApp extends ApplicationFrame {
 				for (int i = 0; i < rows.size(); i++) {
 					if(rows.get(i).getMethodID() == lineResults.get(i).getMethodID()) {
 						result = lineResults.get(i).isResult();
-						if (col.getRuleType().equals("is_Long_Method")) 
+						if (col.getRuleType().equals(Defect.is_long)) 
 							type = rows.get(i).isIs_Long_Method();
-						else if (col.getRuleType().equals("is_Feature_Envy")) 
+						else if (col.getRuleType().equals(Defect.is_feature_envy)) 
 							type = rows.get(i).isIs_Feature_Envy();
 						else break;
 						aux = auxCompare(type, result);

@@ -14,6 +14,7 @@ import rules.BuildRules;
 import rules.LogicOperator;
 import rules.Rule;
 import rules.RulePart;
+import userinterface.Defect;
 import utils.DataBase;
 
 public class GraphApp_Test {
@@ -57,7 +58,7 @@ public class GraphApp_Test {
 		List<RulePart> l1 = new ArrayList<RulePart>();
 		l1.add(new RulePart("LOC", 80, ">"));
 		l1.add(new RulePart("CYCLO", 10, ">"));
-		Rule obj = new Rule(l1, lo, "long method", "is_Long_Method") ;
+		Rule obj = new Rule(l1, lo, "long method", Defect.is_long) ;
 		BuildRules r = new BuildRules(obj, db);
 		r.calculate();
 				
@@ -69,7 +70,7 @@ public class GraphApp_Test {
 		List<RulePart> l2 = new ArrayList<RulePart>();
 		l2.add(new RulePart("ATFD", 4, ">"));
 		l2.add(new RulePart("LAA", 0.42, "<"));
-		Rule object = new Rule(l2, lo, "feature envy", "is_Feature_Envy") ;
+		Rule object = new Rule(l2, lo, "feature envy", Defect.is_feature_envy) ;
 		BuildRules rules = new BuildRules(object, db);
 		rules.calculate();
 		
@@ -78,7 +79,7 @@ public class GraphApp_Test {
 		assertEquals(306, (int) ga.compareRules("feature envy").get(2));
 		assertEquals(2, (int) ga.compareRules("feature envy").get(3));
 		
-		Rule w = new Rule(l2, lo, "something", "no_type") ;
+		Rule w = new Rule(l2, lo, "something", null) ;
 		BuildRules wr = new BuildRules(w, db);
 		wr.calculate();
 		
