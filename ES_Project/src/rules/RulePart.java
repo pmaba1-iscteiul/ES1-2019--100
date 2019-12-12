@@ -34,6 +34,10 @@ public class RulePart implements Serializable{
 		return metric;
 	}
 	
+	public String getMetric() {
+		return metric;
+	}
+
 	/**
 	 * @param feature
 	 */
