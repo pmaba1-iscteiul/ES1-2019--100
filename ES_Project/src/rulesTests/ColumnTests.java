@@ -14,12 +14,13 @@ import org.junit.Test;
 
 import rules.Column;
 import rules.LineResult;
+import userinterface.Defect;
 
 public class ColumnTests {
 	
 	private List<LineResult> array = new ArrayList<LineResult>();
 	private String ruleName = "regra do francisco";
-	private String ruleType = "isLongMethod";
+	private Defect ruleType = Defect.is_long;
 	
 	LineResult lineResult1 = new LineResult(1, true);
 	LineResult lineResult2 = new LineResult(2, false);
@@ -27,31 +28,16 @@ public class ColumnTests {
 	
 	Column column = new Column(ruleName, ruleType);
 
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
-
-	@Before
-	public void setUp() throws Exception {
-	}
-
-	@After
-	public void tearDown() throws Exception {
-	}
 
 	@Test
 	public void testColumn() {
-		Column column2 = new Column("batatas", "nada");
+		Column column2 = new Column("batatas", Defect.is_feature_envy);
 		assertNotEquals("pota",column.getRuleName());
 	}
 
 	@Test
 	public void testGetRuleType() {
-		assertEquals("isLongMethod", column.getRuleType());
+		assertEquals(Defect.is_long, column.getRuleType());
 		assertNotEquals("nada", column.getRuleType());
 	}
 
@@ -61,7 +47,7 @@ public class ColumnTests {
 		array2.add(lineResult1);
 		array.add(lineResult1);
 		assertEquals(array2, array);
-		Assert.assertTrue(column.getArray().containsAll(array2));
+		Assert.assertFalse(column.getArray().containsAll(array2));
 	}
 
 	@Test
