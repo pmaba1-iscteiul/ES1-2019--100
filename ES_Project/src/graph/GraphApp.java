@@ -72,7 +72,7 @@ public class GraphApp extends ApplicationFrame {
 	 * Create and return the data base of histogram for Tools' quality.
 	 * @return CategoryDataset
 	 */
-	private CategoryDataset createDatasetTools( ) {
+	public CategoryDataset createDatasetTools( ) {
 		List<String> tools = List.of("PMD", "iPlasma");
 		List<String> indicators = List.of("DCI", "DII", "ADCI", "ADII");
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset( );  
@@ -91,7 +91,7 @@ public class GraphApp extends ApplicationFrame {
 	 * Create and return the data base of histogram of Rules' quality.
 	 * @return CategoryDataset
 	 */
-	private CategoryDataset createDatasetRules( ) {
+	public CategoryDataset createDatasetRules( ) {
 		List<String> rules = new ArrayList<String>();
 		List<String> indicators = List.of("DCI", "DII", "ADCI", "ADII");       
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset( ); 

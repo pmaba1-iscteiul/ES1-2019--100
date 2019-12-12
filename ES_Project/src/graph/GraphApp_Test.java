@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jfree.data.category.CategoryDataset;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -31,6 +32,40 @@ public class GraphApp_Test {
 	public static void tearDownAfterClass() throws Exception {
 	}
 
+	@Test
+	public void testCreateHistogramRules() {
+		List<LogicOperator> lo = new ArrayList<LogicOperator>();
+		lo.add(LogicOperator.AND);	
+		
+		List<RulePart> l1 = new ArrayList<RulePart>();
+		l1.add(new RulePart("LOC", 80, ">"));
+		l1.add(new RulePart("CYCLO", 10, ">"));
+		Rule obj = new Rule(l1, lo, "long method", Defect.is_long) ;
+		BuildRules r = new BuildRules(obj, db);
+		r.calculate();
+		
+		ga.createHistogramRules();
+		assertEquals(1, ga.getComponentCount());
+	}
+
+	@Test
+	public void testCreateHistogramTools() {
+		ga.createHistogramTools();
+		assertEquals(1, ga.getComponentCount());	
+	}
+	
+	@Test
+	public void testCreateDatasetTools() {
+		CategoryDataset cd =  ga.createDatasetTools();
+		assertEquals("org.jfree.data.category.DefaultCategoryDataset@a6c9beaf", cd.toString());
+	}
+	
+	@Test
+	public void testCreateDatasetRules() {
+		CategoryDataset cd = ga.createDatasetRules();
+		assertEquals("org.jfree.data.category.DefaultCategoryDataset@367", cd.toString());
+	}
+	
 	@Test
 	public void testCompareTools() {
 		assertEquals(140, (int) ga.compareTools("PMD").get(0));
