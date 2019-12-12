@@ -32,7 +32,7 @@ public class BuildRules {
 	 */
 	public void calculate() {
 
-		Column column = new Column(objectRuleVO.getRuleName(), objectRuleVO.getDefect());
+		Column column = new Column(objectRuleVO.getRuleName(), objectRuleVO.getRuleType());
 
 		for(FileRow l : data.getExcel_file()) {
 

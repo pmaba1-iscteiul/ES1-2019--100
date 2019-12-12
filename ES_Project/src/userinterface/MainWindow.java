@@ -265,7 +265,7 @@ public class MainWindow {
 				if(!e.getValueIsAdjusting())
 					if(rule_list.getSelectedValue() != null) {
 						Rule r = (Rule) rule_list.getSelectedValue();
-						createRule(r.getDefect(), r.getRuleName(), false);
+						createRule(r.getRuleType(), r.getRuleName(), false);
 					}
 			}
 		});
