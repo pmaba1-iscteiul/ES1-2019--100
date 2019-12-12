@@ -9,6 +9,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import excelReader.FileRow;
 import rules.BuildRules;
 import rules.LogicOperator;
 import rules.Rule;
@@ -86,6 +87,13 @@ public class GraphApp_Test {
 		assertEquals(0, (int) ga.compareRules("something").get(2));
 		assertEquals(0, (int) ga.compareRules("something").get(3));
 		
+		List<FileRow> rows = db.getExcel_file();
+		rows.add(0, new FileRow(500, "", "", "", 0, 0, 0, 0, false, false, false, false));
+		
+		assertEquals(0, (int) ga.compareRules("feature envy").get(0));
+		assertEquals(0, (int) ga.compareRules("feature envy").get(1));
+		assertEquals(0, (int) ga.compareRules("feature envy").get(2));
+		assertEquals(0, (int) ga.compareRules("feature envy").get(3));
 	}
 
 	@Test

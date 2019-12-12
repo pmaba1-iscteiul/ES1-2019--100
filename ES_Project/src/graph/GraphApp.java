@@ -43,14 +43,8 @@ public class GraphApp extends ApplicationFrame {
 	 * Creates the interface of Histogram for Rules 
 	 */
 	public void createHistogramRules() {
-		JFreeChart barChart = ChartFactory.createBarChart(
-				"Histogram Rules",           
-				"",            
-				"",            
-				createDatasetRules(),          
-				PlotOrientation.VERTICAL,           
-				true, true, false);
-
+		JFreeChart barChart = ChartFactory.createBarChart("Histogram Rules", "", "",           
+				createDatasetRules(), PlotOrientation.VERTICAL, true, true, false);
 		ChartPanel chartPanel = new ChartPanel( barChart );        
 		chartPanel.setPreferredSize(new java.awt.Dimension( 560 , 367 ) );        
 		setContentPane( chartPanel ); 
@@ -63,14 +57,8 @@ public class GraphApp extends ApplicationFrame {
 	 * Creates the interface of Histogram for Tools 
 	 */
 	public void createHistogramTools() {
-		JFreeChart barChart = ChartFactory.createBarChart(
-				"Histogram Tools",         
-				"",            
-				"",            
-				createDatasetTools(),          
-				PlotOrientation.VERTICAL,           
-				true, true, false);
-
+		JFreeChart barChart = ChartFactory.createBarChart("Histogram Tools", "", "",            
+				createDatasetTools(), PlotOrientation.VERTICAL, true, true, false);
 		ChartPanel chartPanel = new ChartPanel( barChart );        
 		chartPanel.setPreferredSize(new java.awt.Dimension( 560 , 367 ) );        
 		setContentPane( chartPanel ); 
@@ -84,11 +72,11 @@ public class GraphApp extends ApplicationFrame {
 	 * @return CategoryDataset
 	 */
 	private CategoryDataset createDatasetTools( ) {
-		final List<String> tools = List.of("PMD", "iPlasma");
-		final List<String> indicators = List.of("DCI", "DII", "ADCI", "ADII");
-		final DefaultCategoryDataset dataset = new DefaultCategoryDataset( );  
-
+		List<String> tools = List.of("PMD", "iPlasma");
+		List<String> indicators = List.of("DCI", "DII", "ADCI", "ADII");
+		DefaultCategoryDataset dataset = new DefaultCategoryDataset( );  
 		List<Integer> results; 
+		
 		for (int i = 0; i < tools.size(); i++) {
 			results = compareTools(tools.get(i));
 			for (int j = 0; j < indicators.size(); j++) {
@@ -103,16 +91,15 @@ public class GraphApp extends ApplicationFrame {
 	 * @return CategoryDataset
 	 */
 	private CategoryDataset createDatasetRules( ) {
-		final List<String> rules = new ArrayList<String>();
-
+		List<String> rules = new ArrayList<String>();
+		List<String> indicators = List.of("DCI", "DII", "ADCI", "ADII");       
+		DefaultCategoryDataset dataset = new DefaultCategoryDataset( ); 
+		List<Integer> results; 
+		
 		List<Column> columns = db.getColumns();
 		for(Column col : columns)
 			rules.add(col.getRuleName());
-
-		final List<String> indicators = List.of("DCI", "DII", "ADCI", "ADII");       
-		final DefaultCategoryDataset dataset = new DefaultCategoryDataset( ); 
-
-		List<Integer> results; 
+		
 		for (int i = 0; i < rules.size(); i++) {
 			results = compareRules(rules.get(i));
 			for (int j = 0; j < indicators.size(); j++) {
@@ -130,13 +117,11 @@ public class GraphApp extends ApplicationFrame {
 	 * @return list of results for the tool's quality 
 	 */
 	public List<Integer> compareTools(String toolName){
-
 		List<FileRow> rows = db.getExcel_file();
-		
-		int aux;
-		boolean type;
-		boolean result = false;
 		List<Integer> results = Arrays.asList(0,0,0,0);
+		int aux = 0;
+		boolean type = false;
+		boolean result = false;
 		
 		for(FileRow method : rows) {
 			if(toolName.equals("PMD"))
@@ -148,6 +133,7 @@ public class GraphApp extends ApplicationFrame {
 			aux = auxCompare(type, result);
 			int x = results.get(aux) + 1;
 			results.set(aux, x);
+			aux = 0;
 		}
 		return results;
 	}	
@@ -160,15 +146,13 @@ public class GraphApp extends ApplicationFrame {
 	 * @return list of results for the rule's quality 
 	 */
 	public List<Integer> compareRules(String ruleName){
-
-		List<FileRow> rows = db.getExcel_file();
 		List<Column> columns = db.getColumns();
-
-		int aux;
-		boolean type;
-		boolean result;
+		List<FileRow> rows = db.getExcel_file();
 		List<Integer> results = Arrays.asList(0,0,0,0);
-
+		int aux = 0;
+		boolean type = false;
+		boolean result = false;
+		
 		for(Column col : columns) {
 			if (col.getRuleName().equals(ruleName)) {
 				List<LineResult> lineResults = col.getArray();
@@ -182,7 +166,8 @@ public class GraphApp extends ApplicationFrame {
 						else break;
 						aux = auxCompare(type, result);
 						results.set(aux, results.get(aux) + 1);
-					}
+						aux = 0;
+					} else break;
 				}
 			}
 		}

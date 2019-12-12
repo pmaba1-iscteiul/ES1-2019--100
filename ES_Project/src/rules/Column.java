@@ -3,6 +3,8 @@ package rules;
 import java.util.ArrayList;
 import java.util.List;
 
+import userinterface.Defect;
+
 /**
  * @author Francisco Raimundo
  * 
@@ -13,16 +15,16 @@ public class Column {
 
 	private List<LineResult> array;
 	private String ruleName;
-	private String ruleType;
+	private Defect ruleType;
 
-	public Column(String ruleName, String ruleType) {
+	public Column(String ruleName, Defect ruleType) {
 		super();
 		this.array = new ArrayList<LineResult>();
 		this.ruleName = ruleName;
 		this.ruleType = ruleType;
 	}	
 	
-	public String getRuleType() {
+	public Defect getRuleType() {
 		return ruleType;
 	}
 	

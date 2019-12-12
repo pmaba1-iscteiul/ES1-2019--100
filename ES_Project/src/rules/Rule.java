@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import userinterface.Defect;
+
 /**
  * @author Francisco Raimundo
  *
@@ -19,10 +21,10 @@ public class Rule implements Serializable{
 	private List<RulePart> listObjectsVO;
 	private List<LogicOperator> listOperators;
 	private String ruleName;
-	private String ruleType;
+	private Defect ruleType;
 	
 	public Rule(List<RulePart> listObjectsVO, List<LogicOperator> listOperators, String ruleName,
-			String ruleType) {
+			Defect ruleType) {
 		super();
 		this.listObjectsVO = listObjectsVO;
 		this.listOperators = listOperators;
@@ -51,7 +53,7 @@ public class Rule implements Serializable{
 		return ruleName;
 	}
 	
-	public String getRuleType() {
+	public Defect getDefect() {
 		return ruleType;
 	}
 
@@ -68,7 +70,15 @@ public class Rule implements Serializable{
 	public void setListOperators(ArrayList<LogicOperator> listOperators) {
 		this.listOperators = listOperators;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		String s = "Name: " + getRuleName() + " Defect: " + getDefect()+  " Condition: " + listObjectsVO.get(0).toString();
+		
+			for(int i = 0; i < listOperators.size(); i++)
+				s += " " + listOperators.get(i).name() + " " + listObjectsVO.get(i+1).toString();
+		return s;
+	}
 	
 }
