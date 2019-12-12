@@ -1,4 +1,4 @@
-package graph;
+package tests;
 
 import static org.junit.Assert.assertEquals;
 
@@ -9,6 +9,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import graph.GraphApp;
 import rules.BuildRules;
 import rules.Rule;
 import rules.RulePart;
