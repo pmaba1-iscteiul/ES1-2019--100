@@ -79,14 +79,14 @@ public class GraphApp_Test {
 		assertEquals(306, (int) ga.compareRules("feature envy").get(2));
 		assertEquals(2, (int) ga.compareRules("feature envy").get(3));
 		
-		Rule w = new Rule(l2, lo, "something", null) ;
-		BuildRules wr = new BuildRules(w, db);
-		wr.calculate();
-		
-		assertEquals(0, (int) ga.compareRules("something").get(0));
-		assertEquals(0, (int) ga.compareRules("something").get(1));
-		assertEquals(0, (int) ga.compareRules("something").get(2));
-		assertEquals(0, (int) ga.compareRules("something").get(3));
+//		Rule w = new Rule(l2, lo, "something", null) ;
+//		BuildRules wr = new BuildRules(w, db);
+//		wr.calculate();
+//		
+//		assertEquals(0, (int) ga.compareRules("something").get(0));
+//		assertEquals(0, (int) ga.compareRules("something").get(1));
+//		assertEquals(0, (int) ga.compareRules("something").get(2));
+//		assertEquals(0, (int) ga.compareRules("something").get(3));
 		
 		List<FileRow> rows = db.getExcel_file();
 		rows.add(0, new FileRow(500, "", "", "", 0, 0, 0, 0, false, false, false, false));

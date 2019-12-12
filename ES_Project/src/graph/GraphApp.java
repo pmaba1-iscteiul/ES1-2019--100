@@ -162,9 +162,8 @@ public class GraphApp extends ApplicationFrame {
 						result = lineResults.get(i).isResult();
 						if (col.getRuleType().equals(Defect.is_long)) 
 							type = rows.get(i).isIs_Long_Method();
-						else if (col.getRuleType().equals(Defect.is_feature_envy)) 
+						else 
 							type = rows.get(i).isIs_Feature_Envy();
-						else break;
 						aux = auxCompare(type, result);
 						results.set(aux, results.get(aux) + 1);
 						aux = 0;
