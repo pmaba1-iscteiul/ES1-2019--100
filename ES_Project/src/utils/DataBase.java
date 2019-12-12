@@ -1,6 +1,7 @@
 package utils;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import rules.Column;
@@ -43,6 +44,13 @@ public class DataBase {
 	}
 	
 	public void addRule(Rule r) {
+		Iterator<Rule> it =  rules.iterator();
+		
+		while(it.hasNext()) {
+			Rule rule = it.next();
+			if(rule.getRuleName().equals(r.getRuleName()))
+				it.remove();
+		}
 		rules.add(r);
 		System.out.println(r.toString());
 	}

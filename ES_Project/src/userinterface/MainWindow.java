@@ -4,9 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +42,7 @@ public class MainWindow {
 	private JPanel visualization_panel;
 	private JPanel rules_alteration_panel;
 	private JPanel rule_creation_defect_panel;
+	private JPanel ruleAlteration;
 	private List<String> condition = new ArrayList<>();
 	private Stack<JPanel> metrics = new Stack<>();
 	private DataBase data;
@@ -67,6 +65,7 @@ public class MainWindow {
 		this.addContentVisualization();
 		this.addContentRulesAlteration();
 		this.addContentRuleDefect();
+		//		this.addContentRuleChanging();
 		this.frame.add(main_panel);
 		this.open();
 
@@ -195,10 +194,10 @@ public class MainWindow {
 		buildScreen(visualization_panel, table_panel);
 
 	}
+
 	/**
 	 * Creates the menu that allows the user to choose if he what's to add a new rule or change a existing one.
 	 * 
-	 * Still missing interface for changing rules
 	 */
 	private void addContentRulesAlteration() {
 		rules_alteration_panel.setLayout(new GridLayout(2,2));
@@ -208,6 +207,8 @@ public class MainWindow {
 		rules_alteration_panel.add(add_rules_button);
 		rules_alteration_panel.add(change_rulles_button);
 		rules_alteration_panel.add(back_button);
+
+
 
 		add_rules_button.addActionListener(new ActionListener() {
 
@@ -224,6 +225,8 @@ public class MainWindow {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				System.out.println("Change Rules");
+				//				buildScreen(rules_alteration_panel, ruleAlteration);
+				addContentRuleChanging();
 			}
 		});
 
@@ -235,6 +238,46 @@ public class MainWindow {
 				buildScreen(rules_alteration_panel, main_panel);
 			}
 		});
+
+	}
+	/**
+	 * Create a panel that allows changing the rule already Created
+	 */
+	private void addContentRuleChanging() {
+		JPanel panel = new JPanel(new BorderLayout());
+		panel.add(new JLabel("What's the rule you want to change?"), BorderLayout.NORTH);
+		DefaultListModel<Rule> list = new DefaultListModel<>();
+		JList rule_list = new JList(list);
+		JScrollPane scroll_list = new JScrollPane(rule_list);
+		list.addAll(data.getRules());
+		panel.add(scroll_list,BorderLayout.EAST);
+
+		rule_list.addListSelectionListener(new ListSelectionListener() {
+
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				// TODO Auto-generated method stub
+				if(!e.getValueIsAdjusting())
+					if(rule_list.getSelectedValue() != null) {
+						Rule r = (Rule) rule_list.getSelectedValue();
+						createRule(r.getDefect(), r.getRuleName());
+						buildScreen(rules_alteration_panel, ruleAlteration);
+					}
+			}
+		});
+
+		JButton backButton = new JButton("Back");
+		panel.add(backButton, BorderLayout.SOUTH);
+		backButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				buildScreen(ruleAlteration, main_panel);
+			}
+		});
+		ruleAlteration = panel;
+		buildScreen(rules_alteration_panel, panel);
 	}
 
 	/**
@@ -307,7 +350,7 @@ public class MainWindow {
 	 * Shows a list of metrics. The user can select these metrics to construct the rule
 	 * @param defect
 	 */
-	private void createRule(Defect defect, String ruleName) {
+	private void createRule(Defect defect, String ruleName, boolean isScratch) {
 		JPanel metrics_panel = new JPanel(new BorderLayout());
 		JPanel left_panel = new JPanel(new BorderLayout());
 		JPanel right_panel = new JPanel(new BorderLayout());
@@ -376,9 +419,10 @@ public class MainWindow {
 		/*
 		 * test end
 		 */
-
-		buildScreen(rule_creation_defect_panel, metrics_panel);
-
+		if(isScratch)
+			buildScreen(rule_creation_defect_panel, metrics_panel);
+		else
+			buildScreen(ruleAlteration, metrics_panel);
 	}
 
 	/**
@@ -488,7 +532,7 @@ public class MainWindow {
 								parts.add(new RulePart(metric, lim, condition_comparator));
 								condition_comparator = "";
 								if (metrics.size() == 1 && parts.size() == 1) {
-									new Rule(parts, (List<LogicOperator>)new ArrayList<LogicOperator>(), ruleName, defect);
+									data.addRule(new Rule(parts, (List<LogicOperator>)new ArrayList<LogicOperator>(), ruleName, defect));
 									buildScreen(metrics.pop(), main_panel);
 								}else if(metrics.size() == 1) {
 									buildScreen(metrics.pop(), joinCondition(parts, ruleName, defect));
