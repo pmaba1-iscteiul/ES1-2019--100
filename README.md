@@ -7,3 +7,5 @@
   <li> <p> 77829 Alexandra Belo </p> </li>
   <li> <p> 82018 Rodrigo Dinis </p> </li>
 </ul>
+
+<h3>Como não é possivel testar a interface gráfica, nos print da cobertura as classes FirstScreen e MainWindown apenas comtêm código relacionado com a interface gráfica</h3>
