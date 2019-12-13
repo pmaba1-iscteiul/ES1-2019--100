@@ -20,7 +20,7 @@ import utils.LogicOperator;
 
 public class DataBase_Test {
 
-	DataBase db = new DataBase("C:/Users/alexa/Documents/METI/1st semester/ESI/projeto/Long-Method.xlsx");
+	DataBase db = new DataBase("D:/Computer_Files/Downloads/Long-Method.xlsx");
 	List<FileRow> dbex = db.getExcel_file(); 
 	List<RulePart> l1 = new ArrayList<RulePart>();
 	List<LogicOperator> lo = new ArrayList<LogicOperator>();
@@ -35,7 +35,7 @@ public class DataBase_Test {
 
 	@Test
 	public void testGetExcel_file() {
-		List<FileRow> ex = ExcelReader.ReadFile("C:/Users/alexa/Documents/METI/1st semester/ESI/projeto/Long-Method.xlsx");
+		List<FileRow> ex = ExcelReader.ReadFile("D:/Computer_Files/Downloads/Long-Method.xlsx");
 		assertEquals(ex.toString(), dbex.toString());
 	}
 
