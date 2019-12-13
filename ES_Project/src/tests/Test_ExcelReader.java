@@ -1,12 +1,12 @@
 package tests;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 import java.io.FileNotFoundException;
 import java.util.List;
 
 import org.junit.Rule;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import excelReader.ExcelReader;
@@ -34,5 +34,5 @@ class Test_ExcelReader {
 		ExcelReader.ReadFile("aaa");
 		expected.expect(FileNotFoundException.class);
 	}
-	
+
 }

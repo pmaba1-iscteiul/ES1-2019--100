@@ -12,7 +12,6 @@ import org.junit.Test;
 import excelReader.ExcelReader;
 import excelReader.FileRow;
 import rules.BuildRules;
-import rules.Column;
 import rules.Rule;
 import rules.RulePart;
 import utils.DataBase;
