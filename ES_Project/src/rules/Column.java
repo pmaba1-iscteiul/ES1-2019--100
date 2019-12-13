@@ -24,12 +24,19 @@ public class Column {
 		this.ruleType = ruleType;
 	}	
 	
+	/**
+	 * @return Defect
+	 * 
+	 * Retorna o valor do enumerado Defect
+	 */
 	public Defect getRuleType() {
 		return ruleType;
 	}
 	
 	/**
 	 * @return Array com o objeto LineResult
+	 * 
+	 * Retorna então uma List com objetos do tipo LineResult
 	 */
 	public List<LineResult> getArray() {
 		return array;
@@ -37,11 +44,18 @@ public class Column {
 	
 	/**
 	 * @return nome da regra
+	 * 
+	 * Com este método conseguimos extrair o nome da regra dada pelo utilizador
 	 */
 	public String getRuleName() {
 		return ruleName;
 	}
 
+	/**
+	 * @param e
+	 * 
+	 * Adicionamos ao array um objeto do tipo LineResult
+	 */
 	public void addResult(LineResult e) {
 		array.add(e);
 	}

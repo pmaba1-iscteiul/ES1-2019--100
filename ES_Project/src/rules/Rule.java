@@ -35,6 +35,8 @@ public class Rule implements Serializable{
 	
 	/**
 	 * @return Lista de RulePart
+	 * 
+	 * Extraimos uma List com obejtos do tipo RulePart
 	 */
 	public List<RulePart> getRulePart() {
 		return listObjectsVO;
@@ -42,6 +44,8 @@ public class Rule implements Serializable{
 	
 	/**
 	 * @param lista de RulePart
+	 * 
+	 * Fazemos set de uma ArrayList com objetos do tipo RulePart
 	 */
 	public void setRulePart(ArrayList<RulePart> listObjectsVO) {
 		this.listObjectsVO = listObjectsVO;
@@ -49,17 +53,27 @@ public class Rule implements Serializable{
 	
 	/**
 	 * @return nome da regra
+	 * 
+	 * Conseguimos saber o nome da Regra
 	 */
+	
 	public String getRuleName() {
 		return ruleName;
 	}
 	
+	/**
+	 * @return Defect
+	 * 
+	 * Conseguimos extrair o valor do Enumerado Defect
+	 */
 	public Defect getRuleType() {
 		return ruleType;
 	}
 
 	/**
 	 * @return array com os operadores lógicos
+	 * 
+	 * Conseguimos extrair uma List com objetos do tipo LogicOperator
 	 */
 	public List<LogicOperator> getListLogicOperators() {
 		return listOperators;
@@ -72,6 +86,11 @@ public class Rule implements Serializable{
 		this.listOperators = listOperators;
 	}
 
+	/**
+	 * @return toString()
+	 * 
+	 * toString para no caso de ser preciso mostrar informação contida num objeto Rule
+	 */
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub

@@ -21,6 +21,8 @@ public class LineResult{
 
 	/**
 	 * @return ID
+	 * 
+	 * Retorna o método ID
 	 */
 	public int getMethodID() {
 		return methodID;
@@ -29,6 +31,8 @@ public class LineResult{
 
 	/**
 	 * @param ID
+	 * 
+	 * Colocamos o método ID passado no paramtro
 	 */
 	public void setMethodID(int methodID) {
 		this.methodID = methodID;
@@ -37,6 +41,8 @@ public class LineResult{
 
 	/**
 	 * @return resultado
+	 * 
+	 * Retornamos um booleano
 	 */
 	public boolean isResult() {
 		return result;
@@ -45,7 +51,10 @@ public class LineResult{
 
 	/**
 	 * @param resultado
+	 * 
+	 * Fazemos set  ao resultado que é booleano
 	 */
+	
 	public void setResult(boolean result) {
 		this.result = result;
 	}
