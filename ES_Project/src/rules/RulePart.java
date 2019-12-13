@@ -35,7 +35,16 @@ public class RulePart implements Serializable{
 	}
 	
 	/**
-	 * @param feature
+	 * @return metric
+	 * 
+	 * Retorna o tipo da métrica
+	 */
+	public String getMetric() {
+		return metric;
+	}
+
+	/**
+	 * @param metric
 	 */
 	public void setMetric(String metric) {
 		this.metric=metric;
@@ -43,6 +52,8 @@ public class RulePart implements Serializable{
 	
 	/**
 	 * @return limit
+	 * 
+	 * Retorna o valor do limite 
 	 */
 	public double getLimit() {
 		return limit;
@@ -57,6 +68,8 @@ public class RulePart implements Serializable{
 
 	/**
 	 * @return operator
+	 * 
+	 * Retorna o operador que pode ser (<,>,<= ou ainda =>)
 	 */
 	public String getOperator() {
 		return operator;
@@ -69,6 +82,11 @@ public class RulePart implements Serializable{
 		this.operator = operator;
 	}
 
+	/**
+	 * @return toString
+	 * 
+	 * Retorna string com informação contida no objeto RulePart
+	 */
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
