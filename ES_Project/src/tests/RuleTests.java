@@ -1,20 +1,16 @@
-package rulesTests;
+package tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import rules.Rule;
 import rules.RulePart;
-import userinterface.Defect;
+import utils.Defect;
 import utils.LogicOperator;
 
 public class RuleTests {

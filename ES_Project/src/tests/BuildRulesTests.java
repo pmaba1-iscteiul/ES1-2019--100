@@ -1,6 +1,7 @@
-package rulesTests;
+package tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +13,8 @@ import rules.BuildRules;
 import rules.Column;
 import rules.Rule;
 import rules.RulePart;
-import userinterface.Defect;
 import utils.DataBase;
+import utils.Defect;
 import utils.LogicOperator;
 
 public class BuildRulesTests {
