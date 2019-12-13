@@ -10,13 +10,12 @@ import java.io.Serializable;
  * o utilizador colocou .
  *
  */
-public class RulePart implements Serializable{
+public class RulePart{
 	// Regra, parametro que é suposto usar, operador e limite
 
-	private static final long serialVersionUID = 8929973800902868640L;
-	String metric;
-	double limit;
-	String operator;
+	private String metric;
+	private double limit;
+	private String operator;
 	
 	
 	
@@ -61,6 +60,7 @@ public class RulePart implements Serializable{
 	
 	/**
 	 * @param limit
+	 * Define o limite
 	 */
 	public void setLimit(double limit) {
 		this.limit=limit;
@@ -92,8 +92,5 @@ public class RulePart implements Serializable{
 		// TODO Auto-generated method stub
 		return metric + " " + operator + " " + limit;
 	}
-	
-	
-		
 }
 

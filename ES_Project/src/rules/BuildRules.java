@@ -117,34 +117,32 @@ public class BuildRules {
 		double limiteNaLinha = getLimiteDaLinha(linha, a);
 
 		if (a.getOperator().equals("<")) {
-			if (limiteNaLinha < a.getLimit()) { 
+
+			if (limiteNaLinha < a.getLimit())
 				return true;
-			} else { 
+			else 
 				return false;
-			}
-		}else {
-			if (a.getOperator().equals("<=")) {
+		}else if (a.getOperator().equals("<=")) {
 
-				if(limiteNaLinha <= a.getLimit()) 
-					return true;
-				else 
-					return false;
-			} else {
-				if (a.getOperator().equals(">")) {
+			if(limiteNaLinha <= a.getLimit()) 
+				return true;
+			else 
+				return false;
+		} else if (a.getOperator().equals(">")) {
 
-					if(limiteNaLinha > a.getLimit()) 
-						return true;
-					else 
-						return false;
-				} else {
+			if(limiteNaLinha > a.getLimit()) 
+				return true;
+			else 
+				return false;
 
-					if(limiteNaLinha >= a.getLimit()) 
-						return true;
-					else 
-						return false;
-				}
-			}
+		} else {
+
+			if(limiteNaLinha >= a.getLimit()) 
+				return true;
+			else 
+				return false;
 		}
+
 	}
 
 	/**

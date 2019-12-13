@@ -18,12 +18,11 @@ public class Column {
 	private Defect ruleType;
 
 	public Column(String ruleName, Defect ruleType) {
-		super();
 		this.array = new ArrayList<LineResult>();
 		this.ruleName = ruleName;
 		this.ruleType = ruleType;
 	}	
-	
+
 	/**
 	 * @return Defect
 	 * 
@@ -32,7 +31,7 @@ public class Column {
 	public Defect getRuleType() {
 		return ruleType;
 	}
-	
+
 	/**
 	 * @return Array com o objeto LineResult
 	 * 
@@ -41,7 +40,7 @@ public class Column {
 	public List<LineResult> getArray() {
 		return array;
 	}
-	
+
 	/**
 	 * @return nome da regra
 	 * 
@@ -60,4 +59,3 @@ public class Column {
 		array.add(e);
 	}
 }
-

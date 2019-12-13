@@ -94,7 +94,7 @@ public class Rule implements Serializable{
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		String s = "Name: " + getRuleName() + " Defect: " + getRuleType()+  " Condition: " + listObjectsVO.get(0).toString();
+		String s = "Name: " + getRuleName() + " Defect: " + getRuleType().name()+  " Condition: " + listObjectsVO.get(0).toString();
 		
 			for(int i = 0; i < listOperators.size(); i++)
 				s += " " + listOperators.get(i).name() + " " + listObjectsVO.get(i+1).toString();
