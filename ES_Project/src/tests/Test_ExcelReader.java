@@ -1,4 +1,4 @@
-package excelReader;
+package tests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -8,6 +8,9 @@ import java.util.List;
 import org.junit.Rule;
 import org.junit.jupiter.api.Test;
 import org.junit.rules.ExpectedException;
+
+import excelReader.ExcelReader;
+import excelReader.FileRow;
 
 class Test_ExcelReader {
 

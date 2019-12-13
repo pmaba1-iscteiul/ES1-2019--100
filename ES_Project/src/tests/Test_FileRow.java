@@ -1,8 +1,10 @@
-package excelReader;
+package tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
+
+import excelReader.FileRow;
 
 class Test_FileRow {	
 	

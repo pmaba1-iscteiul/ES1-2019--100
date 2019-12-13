@@ -1,4 +1,4 @@
-package utils;
+package tests;
 
 import static org.junit.Assert.assertEquals;
 
@@ -12,8 +12,12 @@ import org.junit.Test;
 import excelReader.ExcelReader;
 import excelReader.FileRow;
 import rules.BuildRules;
+import rules.Column;
 import rules.Rule;
 import rules.RulePart;
+import utils.DataBase;
+import utils.Defect;
+import utils.LogicOperator;
 
 public class DataBase_Test {
 
