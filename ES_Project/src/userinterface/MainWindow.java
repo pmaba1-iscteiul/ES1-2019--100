@@ -23,7 +23,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.text.NumberFormatter;
 
-import graph.GraphApp;
 import rules.Column;
 import rules.Rule;
 import rules.RulePart;

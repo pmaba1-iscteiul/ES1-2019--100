@@ -20,13 +20,13 @@ import utils.LogicOperator;
 public class BuildRulesTests {
 	//private DataBase data = new DataBase("C:\Long-Method.xlsx");
 	
-	private List<RulePart> listObjectsVO = new ArrayList<RulePart>();
-	private ArrayList<LogicOperator> listOperators = new ArrayList<LogicOperator>();
-	private String ruleName = "batata";
-	private Defect ruleType = Defect.is_feature_envy;
+	List<RulePart> listObjectsVO = new ArrayList<RulePart>();
+	ArrayList<LogicOperator> listOperators = new ArrayList<LogicOperator>();
+	String ruleName = "batata";
+	Defect ruleType = Defect.is_feature_envy;
 	List<Boolean> arrayIntermedio = new ArrayList<Boolean>();
 	Rule objectRuleVO = new Rule(listObjectsVO, listOperators, ruleName, ruleType);
-	private DataBase data;
+	DataBase data;
 	
 	String metric="LOC";
 	double limit=10;
@@ -44,10 +44,6 @@ public class BuildRulesTests {
 		
 		FileRow fileRow = new FileRow(1,"package","name","method",10,11,12,13,true,false,false,true);
 		FileRow fileRow2 = new FileRow(1,"package","name","method",15,11,12,13,true,false,false,true);
-		data.getExcel_file();
-		
-		
-		
 	}
 
 	@Test
