@@ -1,5 +1,5 @@
 # ES1-2019-100
-<h2>Group Members</h2>
+<h1>Group Members</h1>
 <ul>
   <li> <p> 77614 Pedro Batoca </p></li>
   <li> <p> 77747 Francisco Raimundo </p> </li>
