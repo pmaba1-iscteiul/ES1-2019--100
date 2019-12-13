@@ -8,62 +8,59 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import rules.RulePart;
+
 public class RulePartTests {
 
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
 
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
-
-	@Before
-	public void setUp() throws Exception {
-	}
-
-	@After
-	public void tearDown() throws Exception {
-	}
-
+	String metric = "LOC";
+	double limit = 12.2;
+	String operator = "<";
+	
+	RulePart rulePart = new RulePart(metric, limit, operator);
+	
 	@Test
 	public void testRulePart() {
-		fail("Not yet implemented");
+		assertEquals("<", rulePart.getOperator());
+		assertNotEquals(">", rulePart.getOperator());
 	}
 
 	@Test
 	public void testGetFeature() {
-		fail("Not yet implemented");
+		assertEquals("LOC",rulePart.getFeature());
+		assertNotEquals("LAA", rulePart.getFeature());
 	}
 
 	@Test
 	public void testSetMetric() {
-		fail("Not yet implemented");
+		rulePart.setMetric("LAA");
+		assertEquals("LAA", rulePart.getMetric());
+		assertNotEquals("LOC", rulePart.getMetric());
 	}
 
 	@Test
 	public void testGetLimit() {
-		fail("Not yet implemented");
+		assertNotEquals(11, rulePart.getLimit());
 	}
 
 	@Test
 	public void testSetLimit() {
-		fail("Not yet implemented");
+		rulePart.setLimit(13.5);
+		assertEquals(13.5, rulePart.getLimit(), 0.001);
+		assertNotEquals(10, rulePart.getLimit(), 0.001);
 	}
 
 	@Test
 	public void testGetOperator() {
-		fail("Not yet implemented");
+		assertEquals("<", rulePart.getOperator());
+		assertNotEquals(">", rulePart.getOperator());
 	}
 
 	@Test
 	public void testSetOperator() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetRuleName() {
-		fail("Not yet implemented");
+		rulePart.setOperator("<=");
+		assertEquals("<=", rulePart.getOperator());
+		assertNotEquals(">", rulePart.getOperator());
 	}
 
 }

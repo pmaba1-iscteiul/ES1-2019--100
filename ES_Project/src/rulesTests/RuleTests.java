@@ -12,10 +12,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import rules.LogicOperator;
 import rules.Rule;
 import rules.RulePart;
 import userinterface.Defect;
+import utils.LogicOperator;
 
 public class RuleTests {
 
