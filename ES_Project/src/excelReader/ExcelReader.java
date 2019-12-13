@@ -14,7 +14,13 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ExcelReader {
-
+	
+	/**
+	 * Read File was the method used to read the excel file. It reads all the rows and put the row's data into a List.
+	 * In order to read this file the API from APACHE POI was used
+	 * @param String "FilePath"
+	 * @return List<FileRow>
+	 */
 	public static List<FileRow> ReadFile (String FilePath) {
 		
 		List<FileRow> rows = new ArrayList<>();
