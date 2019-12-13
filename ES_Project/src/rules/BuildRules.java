@@ -12,7 +12,7 @@ import utils.LogicOperator;
  *
  *Classe principal em que vai linha a linha, comparar com a nova regra criada
  *pelo utilizador, vai chegar a um valor booleano, vai ter em conta os 
- *operadores lógicos escolhidos pelo utilizador também e no final vai chegar 
+ *operadores lógicos escolhidos pelo utilizador e no final vai chegar 
  *à conclusão que é verdadeira ou falsa a atual linha do ficheiro isto mais 
  *uma vez, tendo em conta uma regra criada pelo utilizador
  */
@@ -154,7 +154,7 @@ public class BuildRules {
 	 */
 	public double getLimiteDaLinha(FileRow l, RulePart a) {
 		try {
-			switch(a.getFeature()) {
+			switch(a.getMetric()) {
 			case"LOC":
 				return l.getLOC();
 			case"CYCLO":

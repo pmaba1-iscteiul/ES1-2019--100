@@ -32,7 +32,7 @@ public class ExcelReadertest {
 	
 	@Test
 	public void testExeceptio() {
-		ExcelReader.ReadFile("C:asdf");
+		ExcelReader.ReadFile("asdf");
 		expected.expect(FileNotFoundException.class);
 	}
 

@@ -17,8 +17,6 @@ public class RulePart{
 	private double limit;
 	private String operator;
 	
-	
-	
 	public RulePart(String metric, double limit, String operator) {
 		super();
 		this.metric = metric;
@@ -27,15 +25,7 @@ public class RulePart{
 	}
 
 	/**
-	 * @return feature
-	 */
-	public String getFeature() {
-		return metric;
-	}
-	
-	/**
 	 * @return metric
-	 * 
 	 * Retorna o tipo da métrica
 	 */
 	public String getMetric() {
@@ -43,6 +33,7 @@ public class RulePart{
 	}
 
 	/**
+	 * Faz set da metrica
 	 * @param metric
 	 */
 	public void setMetric(String metric) {
@@ -51,7 +42,6 @@ public class RulePart{
 	
 	/**
 	 * @return limit
-	 * 
 	 * Retorna o valor do limite 
 	 */
 	public double getLimit() {
@@ -68,7 +58,6 @@ public class RulePart{
 
 	/**
 	 * @return operator
-	 * 
 	 * Retorna o operador que pode ser (<,>,<= ou ainda =>)
 	 */
 	public String getOperator() {
@@ -76,6 +65,7 @@ public class RulePart{
 	}
 
 	/**
+	 * Faz set do Operador
 	 * @param operator
 	 */
 	public void setOperator(String operator) {
@@ -84,7 +74,6 @@ public class RulePart{
 
 	/**
 	 * @return toString
-	 * 
 	 * Retorna string com informação contida no objeto RulePart
 	 */
 	@Override

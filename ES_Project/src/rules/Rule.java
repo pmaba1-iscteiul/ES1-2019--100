@@ -14,7 +14,7 @@ import utils.LogicOperator;
  *uma lista de todas as métricas, limites associados a essa métrica
  *e também o sinal escolhido pelo utilizador (<,>)
  *E também temos a lista com os operadores lógicos todos escolhidos pelo 
- *utilizador (pela ordem escolhida) .
+ *utilizador (pela ordem escolhida).
  */
 public class Rule implements Serializable{
 	//A concatenação de todas as regras para dizer se é verdadeiro ou falso; ie if(LOC <10 && CYCLO <20)
@@ -36,7 +36,7 @@ public class Rule implements Serializable{
 	/**
 	 * @return Lista de RulePart
 	 * 
-	 * Extraimos uma List com obejtos do tipo RulePart
+	 * Devolve uma List com obejtos do tipo RulePart
 	 */
 	public List<RulePart> getRulePart() {
 		return listObjectsVO;
@@ -56,7 +56,6 @@ public class Rule implements Serializable{
 	 * 
 	 * Conseguimos saber o nome da Regra
 	 */
-	
 	public String getRuleName() {
 		return ruleName;
 	}
@@ -80,6 +79,7 @@ public class Rule implements Serializable{
 	}
 	
 	/**
+	 * Faz set a lista de operadores
 	 * @param array com os operadores lógicos
 	 */
 	public void setListOperators(ArrayList<LogicOperator> listOperators) {

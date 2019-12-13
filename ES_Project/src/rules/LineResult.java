@@ -54,12 +54,13 @@ public class LineResult{
 	 * 
 	 * Fazemos set  ao resultado que é booleano
 	 */
-	
 	public void setResult(boolean result) {
 		this.result = result;
 	}
 
-
+	/**
+	 * Returns a String representation of the LineResult
+	 */
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub

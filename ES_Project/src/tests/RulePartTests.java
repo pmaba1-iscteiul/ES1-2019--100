@@ -26,12 +26,6 @@ public class RulePartTests {
 	}
 
 	@Test
-	public void testGetFeature() {
-		assertEquals("LOC",rulePart.getFeature());
-		assertNotEquals("LAA", rulePart.getFeature());
-	}
-
-	@Test
 	public void testSetMetric() {
 		rulePart.setMetric("LAA");
 		assertEquals("LAA", rulePart.getMetric());
