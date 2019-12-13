@@ -33,8 +33,6 @@ import utils.LogicOperator;
 /**
  * Main visualization window, responsible for all the mechanics in the system and all user interface.
  * 
- * Not fully implemented yet. 
- * 
  * @author João André
  *
  */
