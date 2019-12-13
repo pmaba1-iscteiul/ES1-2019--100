@@ -72,7 +72,7 @@ public class DataBase {
 		for(int i = 0; i < getExcel_file().size(); i++) {
 			String s = getExcel_file().get(i).toString();
 			for(int j = 0; j < columns.size(); j++) {
-				s += columns.get(j).getArray().get(i).toString(); 
+				s += " " + columns.get(j).getArray().get(i).toString();
 			}
 			results.add(s);
 		}

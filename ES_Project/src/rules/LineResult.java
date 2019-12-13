@@ -49,7 +49,15 @@ public class LineResult{
 	public void setResult(boolean result) {
 		this.result = result;
 	}
-	
-	
+
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		if(result)
+			return "TRUE";
+		else
+			return "FALSE";
+	}
 	
 }

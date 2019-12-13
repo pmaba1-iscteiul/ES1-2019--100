@@ -18,13 +18,13 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.text.NumberFormatter;
 
 import graph.GraphApp;
+import rules.Column;
 import rules.Rule;
 import rules.RulePart;
 import utils.DataBase;
@@ -228,17 +228,29 @@ public class MainWindow {
 				buildScreen(table_panel, main_panel);
 			}
 		});
-
-
 		table_panel.setLayout(new BorderLayout());
-		//		JTable table = new JTable();
-		//		JLabel table = new JLabel();
-		//		JTextField table = new JTextField(200);
-		JTextArea table = new JTextArea(20,1);
+
+		List<String> results = data.getResults();
+		List<Column> col = data.getColumns();
+		String[][] dataTable = new String[results.size()][12+col.size()];
+		for(int i = 0; i < dataTable.length; i++) {
+			dataTable[i] = results.get(i).split(" ");
+		}
+		String[] dataNames = new String[12+col.size()];
+		String[] collName = {"MethodID", "package", "class", "method", "LOC", "CYCLO", "ATFD", "LAA", "is_long_method", "iPlasma",
+				"PMD", "is_feature_envy"};
+
+		for(int i = 0; i < dataNames.length; i++) {
+			if(i < 12) {
+				dataNames[i] = collName[i];
+			}else {
+				dataNames[i] = col.get(i-12).getRuleName();
+			}
+		}
+
+		JTable table = new JTable(dataTable, dataNames);
 		JScrollPane table_scroll = new JScrollPane(table);
 		table_panel.add(table_scroll, BorderLayout.NORTH);
-		for(String s: data.getResults()) 
-			table.append(s + "\n");
 
 		table_panel.add(back_button, BorderLayout.SOUTH);
 		buildScreen(visualization_panel, table_panel);
@@ -298,7 +310,7 @@ public class MainWindow {
 		ruleAlteration = new JPanel(new BorderLayout());
 		ruleAlteration.add(new JLabel("What's the rule you want to change?"), BorderLayout.NORTH);
 		DefaultListModel<Rule> list = new DefaultListModel<>();
-		JList rule_list = new JList(list);
+		JList<Rule> rule_list = new JList<Rule>(list);
 		JScrollPane scroll_list = new JScrollPane(rule_list);
 		list.clear();
 		list.addAll(data.getRules());
@@ -405,7 +417,7 @@ public class MainWindow {
 		JPanel right_panel = new JPanel(new BorderLayout());
 
 		DefaultListModel<String> list = new DefaultListModel<String>();
-		JList metric_list = new JList(list);
+		JList<String> metric_list = new JList<String>(list);
 		JScrollPane scroll_list = new JScrollPane(metric_list);
 		left_panel.add(scroll_list, BorderLayout.NORTH);
 
@@ -619,8 +631,8 @@ public class MainWindow {
 
 		panel.add(topLabel, BorderLayout.NORTH);
 
-		DefaultListModel<RulePart> list = new DefaultListModel<>();
-		JList<RulePart> metricList = new JList(list);
+		DefaultListModel<RulePart> list = new DefaultListModel<RulePart>();
+		JList<RulePart> metricList = new JList<RulePart>(list);
 		JScrollPane scroll_list = new JScrollPane(metricList);
 		list.addAll(parts);
 		panel.add(scroll_list, BorderLayout.WEST);
@@ -700,9 +712,9 @@ public class MainWindow {
 		return panel;
 	}
 
-	//	public static void main(String[] args) {
-	//		// TODO Auto-generated method stub
-	//		new MainWindow(new DataBase("D:/Computer_Files/Downloads/Long-Method.xlsx")).init();
-	//	}
+//		public static void main(String[] args) {
+//			// TODO Auto-generated method stub
+//			new MainWindow(new DataBase("D:/Computer_Files/Downloads/Long-Method.xlsx")).init();
+//		}
 
 }
