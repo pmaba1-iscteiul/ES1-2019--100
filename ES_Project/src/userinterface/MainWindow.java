@@ -31,9 +31,7 @@ import utils.Defect;
 import utils.LogicOperator;
 /**
  * Main visualization window, responsible for all the mechanics in the system and all user interface.
- * 
  * @author João André
- *
  */
 public class MainWindow {
 
@@ -51,15 +49,13 @@ public class MainWindow {
 	private String condition_comparator = "";
 	private boolean isSelectible = true;
 
-	/**
-	 * Initializes all class atr
-	 * @param data
-	 */
 	public MainWindow(DataBase data) {
 		super();
 		this.data = data;
 	}
-
+	/**
+	 * Initialises all class attributes and opens the frame
+	 */
 	public void init() {
 		this.frame = new JFrame("Software Engineering App");
 		this.main_panel = new JPanel();
@@ -163,7 +159,9 @@ public class MainWindow {
 			}
 		});	
 	}
-
+	/**
+	 * The user can choose between the rules graphic and tools graphic
+	 */
 	private void addContentChooseGraphic() {
 		JPanel buttonsPanel = new JPanel(new GridLayout(2, 2));
 
@@ -211,7 +209,8 @@ public class MainWindow {
 	}
 
 	/**
-	 * Creates the windows responsible by allowing the user visualize the excel file
+	 * Creates the windows responsible by allowing the user visualize the excel file and the result from the rules created
+	 * by the user
 	 */
 	private void createTableView() {
 		JPanel table_panel = new JPanel();

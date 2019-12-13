@@ -25,7 +25,7 @@ import utils.Defect;
  * @author Rodrigo Dinis; Alexandra Belo
  * 
  * Class that allows view the system analysis results 
- * of the quality of iPlasma and PMD tools through a histogram.
+ * of the quality of iPlasma, PMD tools and Rules created through a histogram.
  */
 public class GraphApp{
 
@@ -41,7 +41,10 @@ public class GraphApp{
 		this.db = db;
 		frame = new JFrame("Histogram");
 	}
-	
+	/**
+	 * Opens the frame, returns true when succeeded
+	 * @return
+	 */
 	public Boolean open() {
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setVisible(true);

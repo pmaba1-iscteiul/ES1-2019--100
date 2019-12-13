@@ -14,7 +14,7 @@ import javax.swing.JTextField;
 
 import utils.DataBase;
 /**
- * This class creates de the first windows of th system. In it the user can choose what file to load
+ * This class creates de the first windows of the system. In it the user can choose what file to load
  * 
  * @author João André
  *
@@ -28,7 +28,7 @@ public class FirstScreen {
 	private JButton browser_button;
 	
 	/**
-	 * Initializaes all class atribtutes and start create the window
+	 * Initialises all class atributes and start create the window
 	 */
 	public FirstScreen() {
 		super();
@@ -41,6 +41,7 @@ public class FirstScreen {
 		this.initialize();
 		this.open();
 	}
+	
 	/**
 	 * Set several parameters related to the JFrame. Sets visibility to true, default close operation to exit on close and
 	 * packs the frame.
@@ -50,8 +51,9 @@ public class FirstScreen {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();
 	}
+	
 	/**
-	 * Creates the layout of the window.
+	 * Creates the initial layout of the window.
 	 */
 	private void initialize() {
 		frame.setLayout(new FlowLayout());
@@ -95,6 +97,7 @@ public class FirstScreen {
 		frame.add(panel);
 		
 	}
+	
 	/**
 	 * Opens a dialog box. In the box the user can navigate through the file system and choose the file to open.
 	 */
@@ -104,6 +107,7 @@ public class FirstScreen {
 			file_path.setText(browser.getSelectedFile().getAbsolutePath());
 		}
 	}
+	
 	/**
 	 * Returns the choosen file path.
 	 * @return 
