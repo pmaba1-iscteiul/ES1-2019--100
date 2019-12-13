@@ -22,14 +22,27 @@ public class DataBase {
 		this.columns = new ArrayList<Column>();
 		this.rules = new ArrayList<Rule>();
 	}
-
+	
+	/**
+	 * Returns a the excel file
+	 * @return List os FileRow
+	 */
 	public List<FileRow> getExcel_file() {
 		return excel_file;
 	}
+	
+	/**
+	 * Returns the list of result from the rules created by the user
+	 * @return List of Column
+	 */
 	public List<Column> getColumns(){
 		return columns;
 	}
-
+	
+	/**
+	 * Adds the result of a rule created by the user
+	 * @param column
+	 */
 	public void addColumn(Column column) {
 		Iterator<Column> it = columns.iterator();
 		
@@ -41,6 +54,10 @@ public class DataBase {
 		columns.add(column);
 	}
 	
+	/**
+	 * Adds a rule to the list of rules and computes it's corresponding result 
+	 * @param r
+	 */
 	public void addRule(Rule r) {
 		Iterator<Rule> it =  rules.iterator();
 		
@@ -53,10 +70,18 @@ public class DataBase {
 		new BuildRules(r, this).calculate();;
 	}
 	
+	/**
+	 *Returns a list with all the rules the user created 
+	 * @return List of Rule
+	 */
 	public List<Rule> getRules() {
 		return rules;
 	}
-
+	
+	/**
+	 * Returns a list with all the rules names. 
+	 * @return String List 
+	 */
 	public List<String> getRulesName(){
 		List<String> names = new ArrayList<String>();
 
@@ -65,7 +90,10 @@ public class DataBase {
 
 		return names;
 	}
-	
+	/**
+	 * Returns a String List with a visualization of the excel line and all the results associated with that line
+	 * @return
+	 */
 	public List<String> getResults(){
 		List<String> results = new ArrayList<String>();
 		
